@@ -34,3 +34,17 @@
 ### 4. 사용자 검색
 
 - 필터: 기술스택, 지역, 개발 실력, 기간, 원하는 그룹 성향
+
+
+
+
+---
+
+### 👀 IA (Information Architecture)
+
+https://gitmind.com/app/docs/fjm0xdsb
+
+<img width="794" height="880" alt="제목없음" src="https://github.com/user-attachments/assets/c76a6105-f303-4ab5-a5a1-3b7ceb92ed44" />
+
+
+### 
