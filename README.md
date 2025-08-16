@@ -46,7 +46,7 @@ https://gitmind.com/app/docs/fjm0xdsb
 
 <img width="794" height="880" alt="제목없음" src="https://github.com/user-attachments/assets/c76a6105-f303-4ab5-a5a1-3b7ceb92ed44" />
 
-ㅡㅡ
+ㅡㅡㅡㅡ
 ### 
 
 
