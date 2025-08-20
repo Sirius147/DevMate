@@ -1,6 +1,7 @@
 package com.sirius.DevMate.domain.user;
 
 import com.sirius.DevMate.domain.common.*;
+import com.sirius.DevMate.domain.common.project.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +55,7 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private WorkStyle preferredWorkStyle;
+    private CollaborateStyle preferredWorkStyle;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
