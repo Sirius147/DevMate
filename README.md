@@ -56,7 +56,4 @@ https://gitmind.com/app/docs/fjm0xdsb
 
 <img width="1890" height="1362" alt="DevMate" src="https://github.com/user-attachments/assets/8502895a-6e23-4576-87ce-931ad2372774" />
 
-[DevMate.xlsx](https://github.com/user-attachments/files/21685413/DevMate.xlsx)
-
-studying..
-soon..
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/67a692fd-641a-434e-a478-7e60481b38b6" />
