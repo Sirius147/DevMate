@@ -54,6 +54,133 @@ https://gitmind.com/app/docs/fjm0xdsb
 
 ### 👀 ERD (Entity Relation Diagram)
 
-<img width="1890" height="1362" alt="DevMate" src="https://github.com/user-attachments/assets/8502895a-6e23-4576-87ce-931ad2372774" />
-
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/67a692fd-641a-434e-a478-7e60481b38b6" />
+chatAttachment							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	Attachment_id	Not Null	long	N		
+FK	채팅아이디	chat_id	Not Null	long	N		
+	이미지url	url	Not Null	varchar(200)	Y		
+	스토리지키	storagekey	Not Null	varchar(200)	Y		
+	파일이름	filename	Not Null	varchar(200)	Y		
+	파일사이즈	filesize	Not Null	long	Y		
+							
+review							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	review_id	Not Null	long	N		
+FK	평가자아이디	user_id	Not Null	long	N		
+FK	프로젝트아이디	project_id	Not Null	long	N		
+	프로젝트리뷰	project_review	Not Null	long	Y		
+	별점	star_point	Not Null	int	Y		
+							
+project							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	project_id	Not Null	long	N		
+	이름	project_name	Not Null	varchar(20)	Y		
+	총원	project_members	Not Null	int	Y		
+	현재원	members	Not Null	int	Y		
+	상태	project_status	Not Null	ENUM	Y		
+	시작일	project_start	Not Null	DateTime	Y		
+	종료일	project_end	Not Null	DateTime	Y		
+	소개	title		varchar(300)	Y		
+	협업방식	collaborate_style		ENUM	Y		
+	선호지역	preferred_region		ENUM	Y		
+	레벨	level		ENUM	Y		
+	백인원	backend_members		int	Y		
+	백현재원	backend_now		int	Y		
+	프론트원	frontend_members		int	Y		
+	프론트현재원	frontend_now		int	Y		
+	디자인원	design_members		int	Y		
+	디자인현재원	design_now		int	Y		
+	기획원	manager_members		int	Y		
+	기획현재원	manager_now		int	Y		
+							
+chatchannel							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	channel_id	Not Null	long	N		
+FK	프로젝트아이디	project_id	Not Null	long	N		
+	채팅방이름	name		varchar(20)	Y		
+	채팅인원	members		int	Y		
+							
+apies							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	api_id	Not Null	long	N		
+FK	프로젝트아이디	project_id	Not Null	long	N		
+	메소드	method	Not Null	ENUM	Y		
+	경로	path	Not Null	Text	Y		
+	응답예문	response_example		Text	Y		
+	파라미터	parameters		TEXT	Y		
+							
+todolist							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	todo_id	Not Null	long	N		
+FK	프로젝트아이디	project_id	Not Null	long	N		
+	내용	content	Not Null	Text	Y		
+	우선순위	proirity	Not Null	ENUM	Y		
+	시작일	startTime		DateTime	Y		
+	마감일	endTime		DateTime	Y		
+	유형	type	Not Null	ENUM	Y		
+	제목	title		varchar(30)	Y		
+	완료여부	is_done	Not NUll	boolean	Y		
+							
+application							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	app_id	Not Null	long	N		
+FK	지원프로젝트아이디	project_id	Not Null	long	N		
+FK	지원자아이디	user_id	Not Null	long	N		
+	지원내용	content		TEXT	Y		
+	지원상태	app_status	Not Null	ENUM	Y		
+	지원시간	applicated_at	Not Null	DateTime	Y		
+							
+Notification							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	notification_id	Not Null	long	N		
+FK	수신자아이디	user_id	Not Null	long	N		
+	알림유형	notification__type	Not Null	ENUM	Y		
+	알림내용	notification_content	Not Null	varchar(200)	Y		
+	알림시간	notifyed_at	Not Null	DateTime	Y		
+	읽은시간	read_at	Not Null	DateTime	Y		
+	소스아이디	source_id	Not Null	long	Y		
+							
+stack							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	us_id	Not Null	long	N		
+FK	id	user_id	Not Null	long	N		
+	기술 유형	stack_type		ENUM	Y		
+	이름	name	Not Null	varchar(20)	Y		
+							
+chatmembership							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	Key	Not Null	long	N		
+FK	유저아이디	user_id	Not Null	long	N		
+FK	채널아이디	channel_id	Not Null	long	N		
+	마지막읽은시간	last_read_at	Not Null	DateTime	Y		
+							
+chatMessage							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	chat_id	Not Null	long	N		
+FK	보낸이	sender_id	Not Null	long	N		
+FK	채널아이디	channel_id	Not Null	long	N		
+	메시지유형	message_type	Not Null	ENUM	Y		
+	메시지내용	content	Not Null	TEXT	Y		
+	메시지생성시간	createdAt	Not Null	DateTime	Y		
+							
+user							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	user_id	Not Null	long	N		
+	이메일	email	Not Null	varchar(40)	Y		
+	닉네임	nickname	Not Null	varchar(20)	Y		
+	지역	region		enum	Y		
+	실력	level		enum	Y		
+	인기도	popularity		double	Y		
+	회원 유형	user_role	Not Null	enum	Y		
+	수정일	updated_at	Not Null	datetime	Y		
+	가입일	created_at	Not Null	datetime	Y		
+	선호	preference		ENUM	Y		
+							
+membership							
+Key	Logical	Physical	Domain	Type	Allow Null	Default Value	Comment
+PK	id	team_id	Not Null	long	N		
+FK	유저아이디	user_id	Not Null	long	N		
+	프로젝트역할	project_role	Not Null	enum	Y		
+	참여일	joined_at	Not Null	DateTime	Y		
+FK	id	project_id	Not Null	long	N		
+							
