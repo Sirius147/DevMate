@@ -1,6 +1,6 @@
 package com.sirius.DevMate.domain.user;
 
-import com.sirius.DevMate.domain.common.StackType;
+import com.sirius.DevMate.domain.common.user.StackType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +21,7 @@ public class Stack {
     @Column(length = 20)
     private StackType stackType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

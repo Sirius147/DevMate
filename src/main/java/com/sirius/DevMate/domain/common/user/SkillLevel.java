@@ -1,4 +1,4 @@
-package com.sirius.DevMate.domain.common;
+package com.sirius.DevMate.domain.common.user;
 
 public enum SkillLevel {
     BEGINNER,

@@ -1,4 +1,4 @@
-package com.sirius.DevMate.domain.common.project;
+package com.sirius.DevMate.domain.common.user;
 
 public enum PreferredAtmosphere {
     RELAXED,

@@ -1,5 +1,5 @@
 package com.sirius.DevMate.domain.common.project;
 
-public enum MemberRole {
-    LEADER, MEMBER
+public enum Priority {
+    HIGH, MEDIUM, LOW
 }
