@@ -21,6 +21,9 @@ public class Doc extends BaseTimeEntity {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @Column(length = 30)
+    private String name;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private RequestMethod method;
