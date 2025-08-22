@@ -53,10 +53,5 @@ https://gitmind.com/app/docs/fjm0xdsb
 ---
 
 ### 👀 ERD (Entity Relation Diagram)
+<img width="1342" height="834" alt="image" src="https://github.com/user-attachments/assets/bbd31ed5-0536-48cf-a447-5708cd027550" />
 
-<img width="1890" height="1362" alt="DevMate" src="https://github.com/user-attachments/assets/8502895a-6e23-4576-87ce-931ad2372774" />
-
-[DevMate.xlsx](https://github.com/user-attachments/files/21685413/DevMate.xlsx)
-
-studying..
-soon..
