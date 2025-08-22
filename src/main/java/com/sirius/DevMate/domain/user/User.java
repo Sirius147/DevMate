@@ -43,7 +43,6 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private SkillLevel skillLevel;
 
-    @Column(nullable = false)
     private Integer popularity; // 0~10
 
     @Enumerated(EnumType.STRING)
