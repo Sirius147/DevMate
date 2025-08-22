@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(name = "uk_user",
+columnNames = {"email"}))
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder(toBuilder = true)
 public class User extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
