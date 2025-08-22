@@ -39,3 +39,4 @@ logging:
     org.hibernate.orm.jdbc.bind: trace
 
   # 비밀키는 엄격히 관리하자...
+  # test
