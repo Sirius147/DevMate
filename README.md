@@ -55,3 +55,5 @@ https://gitmind.com/app/docs/fjm0xdsb
 ### 👀 ERD (Entity Relation Diagram)
 <img width="1342" height="834" alt="image" src="https://github.com/user-attachments/assets/bbd31ed5-0536-48cf-a447-5708cd027550" />
 
+
+### OAuth
