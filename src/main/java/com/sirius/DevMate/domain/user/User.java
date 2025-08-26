@@ -1,26 +1,30 @@
 package com.sirius.DevMate.domain.user;
 
+import com.sirius.DevMate.config.security.oauth.OAuth2Attributes;
 import com.sirius.DevMate.domain.common.*;
 import com.sirius.DevMate.domain.common.project.*;
-import com.sirius.DevMate.domain.common.sys.OAuthProvider;
+import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.common.user.PreferredAtmosphere;
 import com.sirius.DevMate.domain.common.user.PreferredDuration;
 import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
 import com.sirius.DevMate.domain.join.Membership;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(name = "uk_user",
-columnNames = {"email"}))
-@Getter @NoArgsConstructor @AllArgsConstructor @Builder(toBuilder = true)
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_user", columnNames = {"email"}),
+        @UniqueConstraint(name = "uk_user_provider", columnNames = {"provider","provider_id"})
+}
+)
+@Getter
+@NoArgsConstructor @AllArgsConstructor @Builder(toBuilder = true)
 public class User extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
@@ -33,17 +37,16 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 120)
-    private OAuthProvider provider;
+    private OAuth2Provider provider;
 
     @Column(nullable = false, length = 80)
     private String providerId; // google sub/ github id
 
     @Column(length=300)
-    private String pictureUrl;
+    private String avatarUrl;
 
     @Column(nullable=false, length=20)
-    @Builder.Default
-    private String role = "ROLE_USER";
+    private String role;
 
     @Column(nullable = false, length = 30, unique = true)
     private String nickname;
@@ -86,21 +89,32 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) @Builder.Default
     private List<Membership> myMemberships = new ArrayList<>();
 
-    /*
-     * (선택) 도메인 메서드 예시 — setter 대신 의미 있는 변경만 허용하고 싶다면 사용
-     * public User updateProfile(String name, String pictureUrl) {
-     *     return this.toBuilder()
-     *               .name(name)
-     *               .pictureUrl(pictureUrl)
-     *               .build();
-     * }
-     * public User connectProvider(String provider, String providerId) {
-     *     return this.toBuilder()
-     *               .provider(provider)
-     *               .providerId(providerId)
-     *               .build();
-     * }
-     */
+    @PrePersist void prePersist() {
+        createdAt = Instant.from(LocalDateTime.now());
+        updatedAt = createdAt;
+    }
+    @PreUpdate void preUpdate() { updatedAt = Instant.from(LocalDateTime.now()); }
+
+    /** 최초 가입용 정적 팩토리: Builder를 감싸 가독성↑ */
+    public static  User fromOAuth(OAuth2Attributes attr, String resolvedEmail) {
+        return User.builder()
+                .provider(attr.provider())
+                .providerId(attr.providerId())
+                .email(resolvedEmail)      // GitHub는 null일 수 있음
+                .name(attr.name())
+                .avatarUrl(attr.avatarUrl())
+                .role("ROLE_USER")
+                .build();
+    }
+    /** 재로그인 시 프로필 동기화 */
+    public void syncFromOAuth(OAuth2Attributes attr, String resolvedEmail) {
+        // provider/providerId는 동일 계정 식별 키이므로 변경하지 않음
+        if (resolvedEmail != null) this.email = resolvedEmail;
+        this.name = attr.name();
+        this.avatarUrl = attr.avatarUrl();
+        // role 정책이 바뀌면 여기에서 관리
+    }
+
 
 
 }

@@ -36,6 +36,11 @@ spring:
   jackson:
     time-zone: UTC
 
+server:
+  servlet:
+    session:
+      timeout: 30
+
 logging:
   level:
     org.hibernate.SQL: debug

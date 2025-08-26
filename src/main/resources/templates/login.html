@@ -1,64 +1,26 @@
-<!-- src/main/resources/templates/login.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>로그인 | DevMate</title>
-    <style>
-        :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-        body { margin: 0; background: #0b1220; color: #e8eefc; }
-        .wrap { min-height: 100dvh; display: grid; place-items: center; padding: 24px; }
-        .card { width: 100%; max-width: 420px; background: #121a2b; border: 1px solid #1d2741; border-radius: 16px; padding: 24px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
-        h1 { margin: 0 0 8px; font-size: 22px; }
-        p.sub { margin: 0 0 20px; color: #a0b3d8; font-size: 14px; }
-        .btn { display: block; width: 100%; padding: 12px 14px; margin: 10px 0; border-radius: 10px; text-align: center; font-weight: 600; border: 1px solid transparent; background: #1e2a44; color: #e8eefc; text-decoration: none; }
-        .btn:hover { background: #233154; }
-        .btn.google { border-color: #3a4a75; }
-        .btn.github { border-color: #3a4a75; }
-        .muted { color: #9bb0d6; font-size: 12px; margin-top: 16px; }
-        .row { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: 12px; }
-        .tag { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid #334064; color: #b6c4e3; }
-        .msg { background:#15203a; border:1px solid #2a3961; padding:10px 12px; border-radius:10px; font-size:13px; margin:10px 0; }
-        form.inline { display:inline; }
-        button.linky { background:none; border:none; color:#b6c4e3; text-decoration:underline; cursor:pointer; padding:0; font: inherit; }
-    </style>
+    <meta charset="UTF-8"/>
+    <title>로그인 상태</title>
 </head>
 <body>
-<div class="wrap">
-    <div class="card">
-        <h1>DevMate 로그인</h1>
-        <p class="sub">소셜 계정으로 로그인하고 <code>/secure</code> 페이지 접근을 테스트하세요.</p>
+<div th:if="${authenticated}">
+    <h2>로그인 되었습니다</h2>
+    <img th:if="${avatar != null}" th:src="${avatar}" alt="avatar" width="80" height="80"/>
+    <p><b>이름</b>: <span th:text="${name}">사용자</span></p>
+    <p><b>이메일</b>: <span th:text="${email}">이메일없음</span></p>
 
-        <!-- 로그인 에러/로그아웃 플래시 메시지 -->
-        <div class="msg" th:if="${param.error}">로그인 중 오류가 발생했어요. 다시 시도해 주세요.</div>
-        <div class="msg" th:if="${param.logout}">정상적으로 로그아웃 되었습니다.</div>
+    <!-- 로그아웃: POST /logout + CSRF 토큰 필요 -->
+    <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
 
-        <!-- 이미 인증된 상태라면 사용자 이름 보여주기 -->
-        <div class="row" th:if="${#request.userPrincipal != null}">
-            <span class="tag" th:text="'로그인됨: ' + ${#request.userPrincipal.name}">로그인됨</span>
-            <!-- 기본 Spring Security 로그아웃은 POST /logout -->
-            <form class="inline" th:action="@{/logout}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button class="linky" type="submit">로그아웃</button>
-            </form>
-        </div>
-
-        <!-- 소셜 로그인 버튼 -->
-        <a class="btn google" href="/oauth2/authorization/google">Google로 로그인</a>
-        <a class="btn github" href="/oauth2/authorization/github">GitHub로 로그인</a>
-
-        <!-- 테스트 네비게이션 -->
-        <div class="row">
-            <a class="linky" href="/" style="color:#b6c4e3;text-decoration:underline;">홈으로</a>
-            <a class="linky" href="/secure" style="color:#b6c4e3;text-decoration:underline;">/secure 테스트</a>
-        </div>
-
-        <p class="muted">
-            팁: 보호 리소스(<code>/secure</code>)에 직접 접근하면, 로그인 후 자동으로 원래 요청으로 리다이렉트됩니다.
-            (SavedRequest 기반)
-        </p>
-    </div>
+<div th:if="${!authenticated}">
+    <h2>아직 로그인되지 않았습니다</h2>
+    <p><a href="/">소셜 로그인 페이지로 이동</a></p>
 </div>
 </body>
 </html>
