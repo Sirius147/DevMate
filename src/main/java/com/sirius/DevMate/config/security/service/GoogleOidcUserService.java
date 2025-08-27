@@ -1,4 +1,4 @@
-package com.sirius.DevMate.config.security.oauth.service;
+package com.sirius.DevMate.config.security.service;
 
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import lombok.RequiredArgsConstructor;

@@ -1,23 +1,62 @@
-package com.sirius.DevMate;
+package com.sirius.DevMate.config.security.controller;
 
+import com.sirius.DevMate.config.security.controller.dto.BasicSetUpDto;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 @Controller
 public class LoginController {
+
     @GetMapping("/")
     public String home() {
         return "index"; // src/main/resources/templates/index.html
     }
+
+    @GetMapping("/login/basic")
+    public String loginBasic() {
+        return "login/Basic";
+    }
+
+    @PostMapping("/login/basic")
+    public ResponseEntity<Void> loginBasicSetUp(
+            BasicSetUpDto basicSetUpDto,
+            @AuthenticationPrincipal OAuth2User principal) {
+        // 인가 유저 db에서 find 하고 update 하기
+        // service에 메서드 하나 만들기 ?
+
+//  1.      return "redirect:/login/detail";
+//  2.      HttpServletResponse response.sendRedirect("/login/detail");
+        return ResponseEntity.
+                status(302)
+                .header("Location", "/login/detail")
+                .build();
+    }
+
+    @GetMapping("/login/detail")
+    public String loginDetail() {
+        return "login/detail";
+    }
+
+
+    @GetMapping("/main")
+    public String mainPage() {
+        return "mainPage";
+    }
+
+
 
     // 미인가 사용자가 접근 시 mapping
     @GetMapping("/login")
@@ -42,23 +81,14 @@ public class LoginController {
             model.addAttribute("authenticated", false);
             return "login";
         }
-        // 최초 로그인 유저 시 초기프로필 설정 페이지로 이동
 
-        // 기존 유저 로그인 시 main 페이지로 이동
-
-        // 미인증시 로그인 페이지로 이동
-//        return "login";
     }
 
-    @GetMapping("/me")
-    @ResponseBody
-    Object me(@AuthenticationPrincipal OAuth2User user) {
-        return (user == null) ? Map.of("authenticated", false)
-                : Map.of("authenticated", true, "attrs", user.getAttributes());
-    }
-//    @GetMapping("/secure")
+//    @GetMapping("/me")
 //    @ResponseBody
-//    public String secure(@AuthenticationPrincipal OAuth2User principal) {
-//        return "Hello, " + (principal != null ? principal.getAttributes().getOrDefault("email","user") : "anonymous");
+//    Object me(@AuthenticationPrincipal OAuth2User user) {
+//        return (user == null) ? Map.of("authenticated", false)
+//                : Map.of("authenticated", true, "attrs", user.getAttributes());
 //    }
+
 }

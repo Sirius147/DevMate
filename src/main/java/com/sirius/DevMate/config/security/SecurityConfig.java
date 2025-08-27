@@ -1,21 +1,16 @@
 package com.sirius.DevMate.config.security;
 
-import com.sirius.DevMate.config.security.oauth.service.GithubOAuth2UserService;
-import com.sirius.DevMate.config.security.oauth.service.GoogleOidcUserService;
+import com.sirius.DevMate.config.security.handler.OAuth2LoginFailureHandler;
+import com.sirius.DevMate.config.security.handler.OAuth2LoginSuccessHandler;
+import com.sirius.DevMate.config.security.service.GithubOAuth2UserService;
+import com.sirius.DevMate.config.security.service.GoogleOidcUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.LinkedHashMap;
 
 @Configuration
 @EnableMethodSecurity
@@ -35,12 +30,13 @@ public class SecurityConfig {
      */
     private final GithubOAuth2UserService githubOAuth2UserService;
     private final GoogleOidcUserService googleOidcUserService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http
 //            , ClientRegistrationRepository repo // google 인증 서버 로드 리졸버 용
-//            ,AuthenticationSuccessHandler successHandler // 없으면 파라미터 & .successHandler(...) 제거
     ) throws Exception {
 
         // 1) URL별 인가(접근권한) 규칙
@@ -57,13 +53,14 @@ public class SecurityConfig {
                         // userService 호출
                         //  커스텀 로그인 페이지가 있다면 지정
                         // .loginPage("/login")
-                        // 성공 시 항상 /login으로 이동
                         .loginPage("/login")
                         .userInfoEndpoint(u -> u.userService(githubOAuth2UserService)
                                                 .oidcUserService(googleOidcUserService)
                         ) //customOAuth2UserService
-                        .defaultSuccessUrl("/login",true)
-                        .failureUrl("/login?error")
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .failureHandler(oAuth2LoginFailureHandler)
+//                        .defaultSuccessUrl("/login",true) // 성공 시 항상 /login으로 이동
+//                        .failureUrl("/login?error")
                 ).logout(logout -> logout
                         .logoutUrl("/logout").logoutSuccessUrl("/")
                         .invalidateHttpSession(true).deleteCookies("JSESSIONID")
@@ -74,13 +71,6 @@ public class SecurityConfig {
                 ).csrf(csrf -> csrf.disable());  // 개발 시에 csrf 보호 비활성화
 
 
-//                        // (선택) 로그인 성공 후 분기 처리 (최초 로그인 → 프로필 작성 등)
-//                        //   - successHandler가 있다면 이 라인을 제거하고
-//                        .successHandler(successHandler)
-
-//                // (참고) 실패 핸들러 커스터마이징도 가능 (필요 시)
-//                // .failureHandler(customFailureHandler)
-//        );
         // 최종 SecurityFilterChain 빌드
         return http.build();
     }
