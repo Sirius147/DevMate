@@ -9,7 +9,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.LinkedHashMap;
 
 @Configuration
 @EnableMethodSecurity
@@ -33,12 +39,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http
-            , ClientRegistrationRepository repo
+//            , ClientRegistrationRepository repo // google 인증 서버 로드 리졸버 용
 //            ,AuthenticationSuccessHandler successHandler // 없으면 파라미터 & .successHandler(...) 제거
     ) throws Exception {
-
-
-
 
         // 1) URL별 인가(접근권한) 규칙
         http.authorizeHttpRequests(auth -> auth
