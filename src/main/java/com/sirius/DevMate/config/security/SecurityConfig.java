@@ -1,16 +1,13 @@
 package com.sirius.DevMate.config.security;
 
+import com.sirius.DevMate.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableMethodSecurity
@@ -31,15 +28,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,
-            OAuth2UserService<OAuth2UserRequest, OAuth2User> customOAuth2UserService, // 없으면 파라미터 제거
-            AuthenticationSuccessHandler successHandler // 없으면 파라미터 & .successHandler(...) 제거
+            CustomOAuth2UserService customOAuth2UserService // 없으면 파라미터 제거
+//            ,AuthenticationSuccessHandler successHandler // 없으면 파라미터 & .successHandler(...) 제거
     ) throws Exception {
 
         // 1) URL별 인가(접근권한) 규칙
         http.authorizeHttpRequests(auth -> auth
                 // 정적 리소스나 공개 페이지는 누구나 접근 가능
                 .requestMatchers(
-                        "/", "/login", "/error",
+                        "/", "/error",
                         "/css/**", "/js/**", "/images/**", "/favicon.ico", "/oauth2/**"
                 ).permitAll()
                 // 그 외 모든 요청은 인증 필수
@@ -50,6 +47,7 @@ public class SecurityConfig {
                         //  커스텀 로그인 페이지가 있다면 지정
                         // .loginPage("/login")
                         // 성공 시 항상 /login으로 이동
+                        .loginPage("/login")
                         .userInfoEndpoint(u -> u.userService(customOAuth2UserService))
                         .defaultSuccessUrl("/login",true)
                         .failureUrl("/login?error")

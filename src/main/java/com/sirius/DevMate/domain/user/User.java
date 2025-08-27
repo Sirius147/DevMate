@@ -29,7 +29,7 @@ public class User extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private String name;
 
     @Column(length = 100, unique = true) // google/github 이메일
@@ -48,18 +48,18 @@ public class User extends BaseTimeEntity {
     @Column(nullable=false, length=20)
     private String role;
 
-    @Column(nullable = false, length = 30, unique = true)
+    @Column(length = 30, unique = true)
     private String nickname;
 
     @Column(length = 100)
     private String intro;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private Regions region;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private SkillLevel skillLevel;
 
     private Integer popularity; // 0~10
@@ -90,10 +90,12 @@ public class User extends BaseTimeEntity {
     private List<Membership> myMemberships = new ArrayList<>();
 
     @PrePersist void prePersist() {
-        createdAt = Instant.from(LocalDateTime.now());
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
         updatedAt = createdAt;
     }
-    @PreUpdate void preUpdate() { updatedAt = Instant.from(LocalDateTime.now()); }
+    @PreUpdate void preUpdate() { updatedAt = Instant.now(); }
 
     /** 최초 가입용 정적 팩토리: Builder를 감싸 가독성↑ */
     public static  User fromOAuth(OAuth2Attributes attr, String resolvedEmail) {
