@@ -1,8 +1,8 @@
 package com.sirius.DevMate.domain.user;
 
-import com.sirius.DevMate.config.security.oauth.OAuth2Attributes;
-import com.sirius.DevMate.domain.common.*;
-import com.sirius.DevMate.domain.common.project.*;
+import com.sirius.DevMate.domain.common.BaseTimeEntity;
+import com.sirius.DevMate.domain.common.project.CollaborateStyle;
+import com.sirius.DevMate.domain.common.project.Position;
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.common.user.PreferredAtmosphere;
 import com.sirius.DevMate.domain.common.user.PreferredDuration;
@@ -10,12 +10,15 @@ import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
 import com.sirius.DevMate.domain.join.Membership;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -98,22 +101,26 @@ public class User extends BaseTimeEntity {
     @PreUpdate void preUpdate() { updatedAt = Instant.now(); }
 
     /** 최초 가입용 정적 팩토리: Builder를 감싸 가독성↑ */
-    public static  User fromOAuth(OAuth2Attributes attr, String resolvedEmail) {
+    public static  User fromOAuth(OAuth2Provider provider,String providerId,
+            String email, String name, String avatarUrl) {
+        String randomNickname = name + provider + "-" + UUID.randomUUID().toString().substring(0, 8);
+
         return User.builder()
-                .provider(attr.provider())
-                .providerId(attr.providerId())
-                .email(resolvedEmail)      // GitHub는 null일 수 있음
-                .name(attr.name())
-                .avatarUrl(attr.avatarUrl())
+                .provider(provider)
+                .providerId(providerId)
+                .email(email)      // GitHub는 null일 수 있음
+                .name(name)
+                .nickname(randomNickname)
+                .avatarUrl(avatarUrl)
                 .role("ROLE_USER")
                 .build();
     }
     /** 재로그인 시 프로필 동기화 */
-    public void syncFromOAuth(OAuth2Attributes attr, String resolvedEmail) {
+    public void syncFromOAuth(String name, String avatarUrl, String email) {
         // provider/providerId는 동일 계정 식별 키이므로 변경하지 않음
-        if (resolvedEmail != null) this.email = resolvedEmail;
-        this.name = attr.name();
-        this.avatarUrl = attr.avatarUrl();
+        if (email != null) this.email = email;
+        this.name = name;
+        this.avatarUrl = avatarUrl;
         // role 정책이 바뀌면 여기에서 관리
     }
 
