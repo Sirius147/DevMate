@@ -5,15 +5,11 @@ import com.sirius.DevMate.domain.common.project.CollaborateStyle;
 import com.sirius.DevMate.domain.common.project.Position;
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.common.user.PreferredAtmosphere;
-import com.sirius.DevMate.domain.common.user.PreferredDuration;
 import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
 import com.sirius.DevMate.domain.join.Membership;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,10 +19,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(name = "uk_user", columnNames = {"email"}),
-        @UniqueConstraint(name = "uk_user_provider", columnNames = {"provider","provider_id"})
+        @UniqueConstraint(name = "uk_user_provider", columnNames = {"provider","provider_id"}),
+        @UniqueConstraint(name = "uk_user_nickname", columnNames = {"nickname"})
 }
 )
-@Getter
+@Getter @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder(toBuilder = true)
 public class User extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -70,10 +67,6 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private PreferredAtmosphere preferredAtmosphere;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private PreferredDuration preferredDuration;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

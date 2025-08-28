@@ -2,7 +2,7 @@ package com.sirius.DevMate.config.security.service;
 
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.user.User;
-import com.sirius.DevMate.repository.UserRepository;
+import com.sirius.DevMate.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -8,10 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "stack")
+@Table(name = "stack", uniqueConstraints = @UniqueConstraint(name = "uk_stack",
+    columnNames = {"user_id", "stack_name", "stack_type"}
+))
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Stack {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String stackId;
 
     @Column(nullable = false, length = 20)
@@ -22,6 +24,6 @@ public class Stack {
     private StackType stackType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

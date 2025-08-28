@@ -52,8 +52,7 @@ public class SecurityConfig {
                 oauth2Login(oauth2 -> oauth2
                         // userService 호출
                         //  커스텀 로그인 페이지가 있다면 지정
-                        // .loginPage("/login")
-                        .loginPage("/login")
+//                        .loginPage("/login")
                         .userInfoEndpoint(u -> u.userService(githubOAuth2UserService)
                                                 .oidcUserService(googleOidcUserService)
                         ) //customOAuth2UserService

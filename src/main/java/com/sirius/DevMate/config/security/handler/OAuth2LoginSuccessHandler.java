@@ -2,15 +2,13 @@ package com.sirius.DevMate.config.security.handler;
 
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.user.User;
-import com.sirius.DevMate.repository.UserRepository;
-import jakarta.servlet.ServletException;
+import com.sirius.DevMate.repository.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -64,7 +62,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         User user = opt.get();
         // 최초 로그인 유저
         if (user.getCreatedAt().equals(user.getUpdatedAt())) {
-            getRedirectStrategy().sendRedirect(request, response, "/login"); //"/login/basic"
+            getRedirectStrategy().sendRedirect(request, response, "/login/basic");
         } else { // 기존 로그인 유저
             getRedirectStrategy().sendRedirect(request, response, "/main");
         }
