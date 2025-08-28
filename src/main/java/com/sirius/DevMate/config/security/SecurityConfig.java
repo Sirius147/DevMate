@@ -63,11 +63,14 @@ public class SecurityConfig {
                 ).logout(logout -> logout
                         .logoutUrl("/logout").logoutSuccessUrl("/")
                         .invalidateHttpSession(true).deleteCookies("JSESSIONID")
-                ).
-                sessionManagement(sm -> sm
-                        .sessionFixation(sf -> sf.migrateSession())
-                        .maximumSessions(1)
-                ).csrf(csrf -> csrf.disable());  // 개발 시에 csrf 보호 비활성화
+                )
+                .sessionManagement(sm ->
+                        sm.sessionFixation(sf -> sf.none()))
+//                .sessionManagement(sm -> sm
+//                        .sessionFixation(sf -> sf.migrateSession())
+////                        .maximumSessions(2) // 포스트맨 테스트를 위해
+//                )
+                .csrf(csrf -> csrf.disable());  // 개발 시에 csrf 보호 비활성화
 
 
         // 최종 SecurityFilterChain 빌드

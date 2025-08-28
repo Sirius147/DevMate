@@ -57,7 +57,7 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/login/basic")
-    public NicknameAvailableResponseDto loginBasicSetUp(@Valid BasicSetUpDto basicSetUpDto) throws NotFoundUser {
+    public NicknameAvailableResponseDto loginBasicSetUp(@Valid @RequestBody BasicSetUpDto basicSetUpDto) throws NotFoundUser {
 
         // 닉네임 사용 가능
         if (userService.nickNameChecker(basicSetUpDto.getNickname())) {
@@ -82,7 +82,7 @@ public class LoginController {
     }
 
     @PostMapping("/login/detail")
-    public ResponseEntity<Void> loginDetailSetUp(@Valid DetailSetUpDto detailSetUpDto) throws NotFoundUser {
+    public ResponseEntity<Void> loginDetailSetUp(@Valid @RequestBody DetailSetUpDto detailSetUpDto) throws NotFoundUser {
         userService.setDetail(detailSetUpDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

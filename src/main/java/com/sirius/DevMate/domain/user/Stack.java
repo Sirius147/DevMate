@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Stack {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private String stackId;
+    private Long stackId;
 
     @Column(nullable = false, length = 20)
     private String stackName;
