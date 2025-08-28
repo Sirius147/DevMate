@@ -51,7 +51,9 @@ logging:
     org.springframework.security: TRACE
     org.springframework.security.oauth2: TRACE
   # 비밀키는 엄격히 관리하자...
-  # test
-  # test1
-  # test2
-  # test3
+
+
+#jwt:
+#  secret: ${JWT_SECRET:change-me-in-prod}
+#  access-exp-seconds: 900
+#  refresh-exp-seconds: 1209600

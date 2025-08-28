@@ -77,14 +77,5 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /*
-     *PasswordEncoder
-     * - 소셜 로그인만 쓰더라도, 추후 내부 계정/비밀번호 기반 로그인을 병행할 가능성이 있으면 추가해두면 유용.
-     *
-     * @Bean
-     * public PasswordEncoder passwordEncoder() {
-     *     return new BCryptPasswordEncoder();
-     * }
-     */
 
 }
