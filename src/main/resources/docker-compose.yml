@@ -5,3 +5,7 @@ services:
     container_name: devmate-redis
     restart: unless-stopped
     command: ["redis-server","--appendonly","yes"]
+
+    #    실행은 docker compose up -d redis (또는 docker-compose up -d redis)
+    #
+    #    정상 동작 확인:  docker exec -it devmate-redis redis-cli ping → PONG
