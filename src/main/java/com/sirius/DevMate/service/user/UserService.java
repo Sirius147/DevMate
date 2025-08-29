@@ -10,10 +10,12 @@ import com.sirius.DevMate.exception.NotFoundUser;
 import com.sirius.DevMate.repository.user.StackRepository;
 import com.sirius.DevMate.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,22 +33,34 @@ public class UserService {
     // 로그인한 유저 불러오기
     public User getUser() throws NotFoundUser {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()
+                || auth instanceof AnonymousAuthenticationToken) {
+            throw new NotFoundUser("인증되지 않았습니다.");
+        }
 
+        // 1) 일반 API 요청: JWT 인증
+        if (auth instanceof JwtAuthenticationToken jwtAuth) {
+            // 기본 설정이면 getName() == JWT의 sub
+            String sub = jwtAuth.getName(); // 또는: jwtAuth.getToken().getSubject()
+            Long userId = Long.valueOf(sub);
+            return userRepository.findById(userId)
+                    .orElseThrow(() -> new NotFoundUser("사용자를 찾을 수 없습니다."));
+        } else {
+            OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) auth;
+            String registrationId = token.getAuthorizedClientRegistrationId(); // "google" | "github"
+            OAuth2User principal = (OAuth2User) token.getPrincipal();
+            Map<String, Object> attr = principal.getAttributes();
 
-        OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) auth;
-        String registrationId = token.getAuthorizedClientRegistrationId(); // "google" | "github"
-        OAuth2User principal = (OAuth2User) token.getPrincipal();
-        Map<String, Object> attr = principal.getAttributes();
+            String providerId = switch (registrationId) {
+                case "google" -> String.valueOf(attr.get("sub")); // 항상 문자열
+                case "github" -> String.valueOf(attr.get("id"));  // Integer/Long이므로 문자열로 변환
+                default -> null;
+            };
 
-        String providerId = switch (registrationId) {
-            case "google" -> String.valueOf(attr.get("sub")); // 항상 문자열
-            case "github" -> String.valueOf(attr.get("id"));  // Integer/Long이므로 문자열로 변환
-            default -> null;
-        };
-
-        if (providerId == null) throw new NotFoundUser("소셜 로그인 안된 유저입니다");
-        OAuth2Provider provider = OAuth2Provider.valueOf(registrationId.toUpperCase());
-        return userRepository.findByProviderAndProviderId(provider, providerId).get();
+            if (providerId == null) throw new NotFoundUser("소셜 로그인 안된 유저입니다");
+            OAuth2Provider provider = OAuth2Provider.valueOf(registrationId.toUpperCase());
+            return userRepository.findByProviderAndProviderId(provider, providerId).get();
+        }
 
     }
 

@@ -1,4 +1,4 @@
-package com.sirius.DevMate.config.security.oauth;
+package com.sirius.DevMate.config.security.oauth2.tool;
 
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 

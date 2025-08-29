@@ -1,6 +1,6 @@
-package com.sirius.DevMate.config.security.service;
+package com.sirius.DevMate.config.security.oauth2.service;
 
-import com.sirius.DevMate.config.security.oauth.GithubEmailFetcher;
+import com.sirius.DevMate.config.security.oauth2.tool.GithubEmailFetcher;
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,10 +1,5 @@
 package com.sirius.DevMate.security;
 
-import com.sirius.DevMate.config.security.oauth.OAuth2Attributes;
-import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class OAuth2AttributesTest {
