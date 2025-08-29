@@ -105,7 +105,7 @@ public class User extends BaseTimeEntity {
                 .name(name)
                 .nickname(randomNickname)
                 .avatarUrl(avatarUrl)
-                .role("ROLE_USER")
+                .role("USER")
                 .build();
     }
     /** 재로그인 시 프로필 동기화 */

@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,14 @@ public class Project extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Integer currentPm;
+
+    @PrePersist void prePersist() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+        updatedAt = createdAt;
+    }
+    @PreUpdate void preUpdate() { updatedAt = Instant.now(); }
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
     private List<Membership> memberships = new ArrayList<>();

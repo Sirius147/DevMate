@@ -4,6 +4,7 @@ import com.sirius.DevMate.config.security.handler.OAuth2LoginFailureHandler;
 import com.sirius.DevMate.config.security.handler.OAuth2LoginSuccessHandler;
 import com.sirius.DevMate.config.security.oauth2.service.GithubOAuth2UserService;
 import com.sirius.DevMate.config.security.oauth2.service.GoogleOidcUserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
