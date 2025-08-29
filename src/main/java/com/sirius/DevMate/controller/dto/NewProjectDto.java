@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-@Getter
 public record NewProjectDto(@NotNull @Size(min = 2, max = 20, message = "20글자 안쪽이어야 합니다") String title,
                             @NotNull @Size(min = 5, max = 300, message = "300글자 안쪽이어야 합니다") String shortDescription,
                             @Positive @NotNull Integer recruitSize, @PositiveOrZero @NotNull Integer currentSize,
