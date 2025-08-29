@@ -18,16 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    /**
-     * - 인가 규칙(permitAll / authenticated)
-     * - OAuth2 로그인(로그인 페이지, 사용자 정보 로딩, 성공/실패 핸들러)
-     * - 로그아웃 동작
-
-     *  파라미터로 받는 Bean
-     *   - customOAuth2UserService: 소셜 프로필을 우리 도메인 유저로 매핑(Upsert)하는 커스텀 서비스
-     *   - successHandler: 로그인 성공 후 리다이렉트/분기(프로필 작성 유도 등) 처리
-     *   둘 중 없는 것이 있다면, 해당 파라미터와 설정 라인을 제거해도 됩니다.
-     */
     private final GithubOAuth2UserService githubOAuth2UserService;
     private final GoogleOidcUserService googleOidcUserService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
