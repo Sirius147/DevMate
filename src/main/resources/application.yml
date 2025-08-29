@@ -51,7 +51,7 @@ logging:
     org.springframework.security: TRACE
     org.springframework.security.oauth2: TRACE
   # 비밀키는 엄격히 관리하자...
-
+  ##
 
 #jwt:
 #  secret: ${JWT_SECRET}
