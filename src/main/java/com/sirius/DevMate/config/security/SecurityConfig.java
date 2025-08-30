@@ -52,6 +52,8 @@ public class SecurityConfig {
                 })
                 .csrf(csrf -> csrf.disable())   // 개발 시에 csrf 보호 비활성화
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // 전역 exception handling을 bearer entrypoint로
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(bearerAuthEntryPoint()))
 //                .sessionManagement(sm ->
 //                        sm.sessionFixation(sf -> sf.none()))
 //                .sessionManagement(sm -> sm
