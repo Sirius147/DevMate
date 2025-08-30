@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +35,7 @@ public class LoginController {
         return "index"; // src/main/resources/templates/index.html
     }
 
+    // login.html 파일 로드
     @GetMapping("/login/basic")
     public String loginBasic(Model model, @AuthenticationPrincipal Jwt principal) throws NotFoundUser {
         if (principal != null) {

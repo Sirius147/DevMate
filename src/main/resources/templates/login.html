@@ -12,7 +12,7 @@
     <p><b>이메일</b>: <span th:text="${email}">이메일없음</span></p>
 
     <!-- 로그아웃: POST /logout + CSRF 토큰 필요 -->
-    <form th:action="@{/logout}" method="post">
+    <form th:action="@{/auth/logout}" method="post">
         <input type="hidden"
                th:if="${_csrf != null}"
                th:name="${_csrf.parameterName}"
