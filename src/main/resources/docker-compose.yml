@@ -9,3 +9,23 @@ services:
     #    실행은 docker compose up -d redis (또는 docker-compose up -d redis)
     #
     #    정상 동작 확인:  docker exec -it devmate-redis redis-cli ping → PONG
+
+#    # (개발용) 전부 보기 — 운영에선 쓰지 말고 SCAN 사용
+#    KEYS rt:jti:*
+#
+#    # 운영 권장: 점진 검색
+#    SCAN 0 MATCH rt:jti:* COUNT 100
+#
+#    # 단일 JTI 해시 전체 읽기
+#    HGETALL rt:jti:<JTI값>
+#
+#    # 특정 필드만
+#    HGET rt:jti:<JTI값> userId
+#    HGET rt:jti:<JTI값> expEpoch
+#    HGET rt:jti:<JTI값> revoked
+#
+#    # 남은 TTL(초) 확인 (-2: 없음, -1: TTL 없음)
+#    TTL rt:jti:<JTI값>
+#
+#    # 존재 여부(1/0)
+#    EXISTS rt:jti:<JTI값>

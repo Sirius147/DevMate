@@ -7,7 +7,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Repository
@@ -20,37 +19,32 @@ public class RefreshTokenRepository {
         this.redis = redis;
     }
 
-
     private String key(String jti) {
         return KEY_PREFIX + jti;
     }
-
 
     public void save(RefreshTokenRecord record) {
         String key = key(record.jti());
         Map<String, String> map = toMap(record);
         redis.opsForHash().putAll(key, map);
 
-        // TTL = expiresAt - now
+        // 휘발 설정
         long seconds = Math.max(1, record.expiresAt().getEpochSecond() - Instant.now().getEpochSecond());
         redis.expire(key, Duration.ofSeconds(seconds));
     }
 
-
     public Optional<RefreshTokenRecord> findByJti(String jti) {
         String key = key(jti);
         Map<Object, Object> entries = redis.opsForHash().entries(key);
-        if (entries == null || entries.isEmpty()) return Optional.empty();
+        if (entries.isEmpty()) return Optional.empty();
         return Optional.of(fromMap(entries));
     }
 
-
-    public void revoke(String jti) {
-        String key = key(jti);
-        redis.opsForHash().put(key, "revoked", "1");
-        // TTL은 그대로 유지
-    }
-
+//    public void revoke(String jti) {
+//        String key = key(jti);
+//        redis.opsForHash().put(key, "revoked", "1");
+//        // TTL은 그대로 유지
+//    }
 
     public void delete(String jti) {
         redis.delete(key(jti));
@@ -61,8 +55,8 @@ public class RefreshTokenRepository {
         return Map.of(
                 "jti", r.jti(),
                 "userId", String.valueOf(r.userId()),
-                "expiresAt", String.valueOf(r.expiresAt().getEpochSecond()),
-                "revoked", r.revoked() ? "1" : "0"
+                "expiresAt", String.valueOf(r.expiresAt().getEpochSecond())
+//                "revoked", r.revoked() ? "1" : "0"
         );
     }
 
@@ -70,8 +64,8 @@ public class RefreshTokenRepository {
         String jti = str(m.get("jti"));
         Long userId = Long.parseLong(str(m.get("userId")));
         Instant expiresAt = Instant.ofEpochSecond(Long.parseLong(str(m.get("expiresAt"))));
-        boolean revoked = "1".equals(str(m.get("revoked")));
-        return new RefreshTokenRecord(jti, userId, expiresAt, revoked);
+//        boolean revoked = "1".equals(str(m.get("revoked")));
+        return new RefreshTokenRecord(jti, userId, expiresAt);
     }
 
     private static String str(Object o) {

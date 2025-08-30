@@ -2,16 +2,17 @@ spring:
   config:
     activate:
       on-profile: local # 실행시 항상 확인 !!
+# MySQL
   datasource:
     url: jdbc:mysql://localhost:3306/devmate?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+# Redis Host & Port for JWT
   redis:
     host: localhost
     port: 6379
-
+# Jpa (hibernate)
   jpa:
     open-in-view: false
     hibernate:
@@ -19,12 +20,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#        show_sql: true
+#        show_sql: true # 콘솔에 프린트
         jdbc.time_zone: UTC
-#        dialect: org.hibernate.dialect.MySQL8Dialect
+# schema sql 자동 실행 제어
   sql:
     init:
       mode: never               # schema.sql/data.sql 자동실행 제어 (always/embedded/never)
+# OAuth2 Key & Secret
   security:
     oauth2:
       client:
@@ -39,12 +41,13 @@ spring:
             scope: user:email
   jackson:
     time-zone: UTC
-
+# server session timeout
 server:
   servlet:
     session:
       timeout: 30
 
+# log
 logging:
   charset:
     console: UTF-8
@@ -57,7 +60,9 @@ logging:
   # 비밀키는 엄격히 관리하자...
   ##
 
+# JWT secret & token exp
 jwt:
+  issuer: devmate
   secret: ${JWT_SECRET}
   access-exp-seconds: 900
   refresh-exp-seconds: 1209600
