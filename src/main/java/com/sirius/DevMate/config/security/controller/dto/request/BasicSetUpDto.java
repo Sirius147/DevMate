@@ -1,4 +1,4 @@
-package com.sirius.DevMate.config.security.controller.dto;
+package com.sirius.DevMate.config.security.controller.dto.request;
 
 import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;

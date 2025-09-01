@@ -1,4 +1,4 @@
-package com.sirius.DevMate.config.security.controller.dto;
+package com.sirius.DevMate.config.security.controller.dto.request;
 
 import com.sirius.DevMate.domain.common.project.CollaborateStyle;
 import com.sirius.DevMate.domain.common.project.Position;

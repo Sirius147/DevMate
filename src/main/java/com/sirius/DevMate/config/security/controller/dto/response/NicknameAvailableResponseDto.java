@@ -1,4 +1,4 @@
-package com.sirius.DevMate.config.security.controller.dto;
+package com.sirius.DevMate.config.security.controller.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

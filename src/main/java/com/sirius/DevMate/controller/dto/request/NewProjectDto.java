@@ -1,4 +1,4 @@
-package com.sirius.DevMate.controller.dto;
+package com.sirius.DevMate.controller.dto.request;
 
 import com.sirius.DevMate.domain.common.project.CollaborateStyle;
 import com.sirius.DevMate.domain.common.user.Regions;
@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 

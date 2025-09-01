@@ -46,6 +46,7 @@ public class RefreshTokenRepository {
 //        // TTL은 그대로 유지
 //    }
 
+    // 즉시 삭제
     public void delete(String jti) {
         redis.delete(key(jti));
     }

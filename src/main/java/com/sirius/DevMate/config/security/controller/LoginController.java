@@ -1,11 +1,11 @@
 package com.sirius.DevMate.config.security.controller;
 
-import com.sirius.DevMate.config.security.controller.dto.BasicSetUpDto;
-import com.sirius.DevMate.config.security.controller.dto.DetailSetUpDto;
-import com.sirius.DevMate.config.security.controller.dto.NicknameAvailableResponseDto;
-import com.sirius.DevMate.config.security.controller.dto.StackSetUpDto;
+import com.sirius.DevMate.config.security.controller.dto.request.BasicSetUpDto;
+import com.sirius.DevMate.config.security.controller.dto.request.DetailSetUpDto;
+import com.sirius.DevMate.config.security.controller.dto.response.NicknameAvailableResponseDto;
+import com.sirius.DevMate.config.security.controller.dto.request.StackSetUpDto;
 import com.sirius.DevMate.domain.user.User;
-import com.sirius.DevMate.exception.NotFoundUser;
+import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class LoginController {
 
     // login.html 파일 로드
     @GetMapping("/login/basic")
-    public String loginBasic(Model model, @AuthenticationPrincipal Jwt principal) throws NotFoundUser {
+    public String loginBasic(Model model, @AuthenticationPrincipal Jwt principal) throws UserNotFound {
         if (principal != null) {
             User user = userService.getUser();
 
@@ -58,10 +58,10 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/login/basic")
-    public NicknameAvailableResponseDto loginBasicSetUp(@Valid @RequestBody BasicSetUpDto basicSetUpDto) throws NotFoundUser {
+    public NicknameAvailableResponseDto loginBasicSetUp(@Valid @RequestBody BasicSetUpDto basicSetUpDto) throws UserNotFound {
 
         // 닉네임 사용 가능
-        if (userService.nickNameChecker(basicSetUpDto.getNickname())) {
+        if (userService.isNickNameAvailable(basicSetUpDto.getNickname())) {
             userService.setBasic(basicSetUpDto);
             return new NicknameAvailableResponseDto(true);
         }
@@ -83,7 +83,7 @@ public class LoginController {
     }
 
     @PostMapping("/login/detail")
-    public ResponseEntity<Void> loginDetailSetUp(@Valid @RequestBody DetailSetUpDto detailSetUpDto) throws NotFoundUser {
+    public ResponseEntity<Void> loginDetailSetUp(@Valid @RequestBody DetailSetUpDto detailSetUpDto) throws UserNotFound {
         userService.setDetail(detailSetUpDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -94,7 +94,7 @@ public class LoginController {
     }
 
     @PostMapping("/login/stack")
-    public ResponseEntity<Void> loginStackSetUp(@RequestBody @Valid List<StackSetUpDto> stackSetUpDtoList) throws NotFoundUser {
+    public ResponseEntity<Void> loginStackSetUp(@RequestBody @Valid List<StackSetUpDto> stackSetUpDtoList) throws UserNotFound {
         userService.setStack(stackSetUpDtoList);
         return new ResponseEntity<>(HttpStatus.OK);
     }

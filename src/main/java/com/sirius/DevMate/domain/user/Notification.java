@@ -26,9 +26,6 @@ public class Notification extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private NotificationType notificationType;
 
-    @Column(nullable = false)
-    private Long sourceId;
-
     @Column(nullable = false, length = 300)
     private String content;
 
@@ -39,6 +36,11 @@ public class Notification extends BaseTimeEntity {
 
     @PrePersist
     public void prePersist() {
+        this.createdAt = Instant.now();
         this.checked = false;
+    }
+
+    public void checked() {
+        this.checked = true;
     }
 }

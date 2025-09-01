@@ -1,6 +1,7 @@
 package com.sirius.DevMate.repository.user;
 
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
+import com.sirius.DevMate.domain.user.Notification;
 import com.sirius.DevMate.domain.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -72,4 +73,10 @@ public class UserRepository {
     public void delete(User user) {
         em.remove(em.contains(user) ? user : em.merge(user));
     }
+
+    public void expireNotification(Notification notification) {
+        em.remove(em.contains(notification) ? notification : em.merge(notification));
+    }
+
+
 }

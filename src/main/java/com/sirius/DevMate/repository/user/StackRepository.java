@@ -1,5 +1,6 @@
 package com.sirius.DevMate.repository.user;
 
+import com.sirius.DevMate.domain.common.user.StackType;
 import com.sirius.DevMate.domain.user.Stack;
 import com.sirius.DevMate.domain.user.User;
 import jakarta.persistence.EntityManager;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -41,5 +43,18 @@ public class StackRepository {
         return em.createQuery("select s from Stack s where s.user = :user", Stack.class)
                 .setParameter("user", user)
                 .getResultList();
+    }
+
+    public Optional<Stack> findSpecificStack(User user, StackType stackType) {
+        return Optional.ofNullable(em.createQuery("select s from Stack s where s.user = :user and " +
+                "s.stackType = :stackType", Stack.class)
+                .getSingleResult());
+    }
+
+    public void setSpecificStack(User user, StackType stackType, String stackName) {
+        em.createQuery("select s from Stack s where s.user = :user and " +
+                        "s.stackType = :stackType", Stack.class)
+                .getSingleResult()
+                .setStackName(stackName);
     }
 }

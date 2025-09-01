@@ -2,16 +2,14 @@ package com.sirius.DevMate.domain.user;
 
 import com.sirius.DevMate.domain.common.user.StackType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "stack", uniqueConstraints = @UniqueConstraint(name = "uk_stack",
     columnNames = {"user_id", "stack_name", "stack_type"}
 ))
-@Getter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class Stack {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long stackId;

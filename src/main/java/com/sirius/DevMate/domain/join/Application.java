@@ -2,6 +2,7 @@ package com.sirius.DevMate.domain.join;
 
 import com.sirius.DevMate.domain.common.BaseTimeEntity;
 import com.sirius.DevMate.domain.common.project.ApplicationStatus;
+import com.sirius.DevMate.domain.common.project.Position;
 import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.user.User;
 import jakarta.persistence.*;
@@ -32,6 +33,10 @@ public class Application extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private Position applyPosition;
 
     @Lob
     private String content;

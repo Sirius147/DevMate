@@ -2,8 +2,10 @@ package com.sirius.DevMate.domain.project;
 
 import com.sirius.DevMate.domain.common.BaseTimeEntity;
 import com.sirius.DevMate.domain.common.project.CollaborateStyle;
+import com.sirius.DevMate.domain.common.project.ProjectStatus;
 import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
+import com.sirius.DevMate.domain.join.Application;
 import com.sirius.DevMate.domain.join.Membership;
 import com.sirius.DevMate.domain.join.Review;
 import com.sirius.DevMate.domain.project.chat.ChatChannel;
@@ -63,6 +65,9 @@ public class Project extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private SkillLevel projectLevel;
 
+    @Column(nullable = false, length = 20)
+    private ProjectStatus projectStatus;
+
     @Column(nullable = false)
     private Integer backendMembers;
 
@@ -97,6 +102,10 @@ public class Project extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
     private List<Membership> memberships = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Application> applications = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
     private List<Review> reviews = new ArrayList<>();
