@@ -288,4 +288,7 @@ public class UserService {
         return new PageList<>(notificationDtos, (long) notificationDtos.size());
     }
 
+    public void withdrawal() throws UserNotFound {
+        userRepository.delete(getUser());
+    }
 }

@@ -28,9 +28,11 @@ public class MembershipRepository {
                 .getResultList();
     }
 
-    public boolean existByUserId(Long userId) {
-        String jpql = "select count(m) from Membership m where m.user.userId = :userId";
+    public boolean existByUserId(Long userId, Long projectId) {
+        String jpql = "select count(m) from Membership m " +
+                "where m.user.userId = :userId and m.project.projectId = :projectId";
         return (em.createQuery(jpql, Long.class)
                 .getSingleResult() > 0);
     }
+
 }

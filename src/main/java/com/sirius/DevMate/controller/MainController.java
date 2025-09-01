@@ -51,6 +51,7 @@ public class MainController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @ResponseBody
     @GetMapping("/my-page")
     public MyPageDto myPage() throws UserNotFound {
@@ -60,18 +61,24 @@ public class MainController {
     @PostMapping("/my-page")
     public ResponseEntity<NicknameAvailableResponseDto> checkNickname(@RequestParam String newNickname) {
         if (userService.isNickNameAvailable(newNickname)) {
-            return ResponseEntity.status(201)
+            return ResponseEntity.status(HttpStatus.OK)
                     .body(new NicknameAvailableResponseDto(true));
         } else {
-            return ResponseEntity.status(201)
+            return ResponseEntity.status(HttpStatus.OK)
                     .body(new NicknameAvailableResponseDto(false));
         }
     }
 
-    @PostMapping("/my-page")
+    @PatchMapping("/my-page")
     public ResponseEntity<Void> updateProfile(@RequestBody UpdateProfileDto updateProfileDto) throws UserNotFound {
         userService.setProfile(updateProfileDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/my-page")
+    public ResponseEntity<Void> withdrawal() throws UserNotFound {
+        userService.withdrawal();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ResponseBody

@@ -108,7 +108,7 @@ public class ProjectService {
             throw new ProjectException("존재 하지 않는 프로젝트 입니다");
         } else {
 
-            if (membershipRepository.existByUserId(loginUser.getUserId())) {
+            if (membershipRepository.existByUserId(loginUser.getUserId(), project.get().getProjectId())) {
                 throw new ProjectException("두번 이상 지원은 불가합니다");
             }
 
