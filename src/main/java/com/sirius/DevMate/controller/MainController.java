@@ -10,6 +10,7 @@ import com.sirius.DevMate.domain.common.project.Position;
 import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.exception.ProjectException;
+import com.sirius.DevMate.service.join.ApplicationService;
 import com.sirius.DevMate.service.project.ProjectService;
 import com.sirius.DevMate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class MainController {
 
     private final ProjectService projectService;
     private final UserService userService;
+    private final ApplicationService applicationService;
 
     @ResponseBody
     @GetMapping
@@ -43,11 +45,16 @@ public class MainController {
         return projectService.searchProject(projectSearchRequestDto);
     }
 
+    @GetMapping("/apply/{projectId}")
+    public ResponseEntity<Void> applyPage() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/apply/{projectId}")
     public ResponseEntity<Void> applyProject(@PathVariable("projectId") Long projectId,
                                              @RequestParam Position position,
                                              @RequestParam String content) throws ProjectException, UserNotFound {
-        projectService.newApplication(projectId, position, content);
+        applicationService.newApplication(projectId, position, content);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -87,11 +94,6 @@ public class MainController {
         return userService.getNotification();
     }
 
-    @ResponseBody
-    @GetMapping("/my-project")
-    public List<MembershipDto> myProject() throws UserNotFound {
-        return userService.getMemberShips();
-    }
 
     @GetMapping("/new-project")
     public ResponseEntity<Void> newProject() {
@@ -99,7 +101,7 @@ public class MainController {
     }
 
     @PostMapping("/new-project")
-    public ResponseEntity<Void> makeProject(@RequestBody NewProjectDto newProjectDto) throws UserNotFound {
+    public ResponseEntity<Void> makeProject(@RequestBody NewProjectDto newProjectDto) throws UserNotFound, ProjectException {
         projectService.newProject(newProjectDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

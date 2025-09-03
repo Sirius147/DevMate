@@ -8,10 +8,13 @@ import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.user.Notification;
 import com.sirius.DevMate.domain.user.User;
 import com.sirius.DevMate.exception.ProjectException;
+import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.repository.user.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,17 +22,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
+    private final UserService userService;
 
     private Notification createNotification(
             User user,
             NotificationType notificationType,
             String content
     ) {
-        return Notification.builder()
+        Notification notification = Notification.builder()
                 .user(user)
                 .notificationType(notificationType)
                 .content(content)
                 .build();
+
+        notificationRepository.save(notification);
+        user.getNotifications().add(notification);
+
+        return notification;
+    }
+
+    public void expireNotification(Notification notification) throws UserNotFound {
+        User user = userService.getUser();
+        user.getNotifications().remove(notification);
+        notificationRepository.delete(notification);
     }
 
     public void notifyApplicationSubmittedNotifications(User loginUser, Project project, Application application) throws ProjectException {
@@ -57,18 +72,28 @@ public class NotificationService {
                 leaderContent
         );
 
-
-        notificationRepository.save(applicantNotification);
-        loginUser.getNotifications().add(applicantNotification);
-        notificationRepository.save(leaderNotification);
-        projectLeader.getNotifications().add(leaderNotification);
     }
 
-    public void notifyApplicationAcceptedNotification(User leaderUser, User applicantUser, Project project, Application application) throws ProjectException {
+    public void notifyApplicationAcceptedNotification(User leaderUser, User applicantUser, Project project) throws ProjectException {
 
-        String applicantContent = "프로젝트" + project.getTitle() + "에 참여 승인!";
-        String leaderContent = "프로젝트" + project.getTitle() + "에 지원자: " +
-                applicantUser.getNickname() + "가 포지션: " + application.getApplyPosition() +
-                "으로 배정되었습니다!";
+        createNotification(leaderUser, NotificationType.APPLICATION_ACCEPTED,
+                "프로젝트" + project.getTitle() + " 에 지원자 " + applicantUser.getNickname() +
+                        " 승인 완료");
+
+        createNotification(applicantUser, NotificationType.APPLICATION_ACCEPTED,
+                "프로젝트" + project.getTitle() + " 에 참가 승인 되었습니다");
+    }
+
+    public void notifyProjectStartNotification(List<Membership> memberships) {
+        for (Membership membership : memberships) {
+            createNotification(membership.getUser(), NotificationType.PROJECT_START,
+                    "프로젝트" + membership.getProject().getTitle() + "(이)가 시작하였습니다! " +
+                            "내 프로젝트 창에서 확인하세요");
+        }
+    }
+
+    public void notifyApplicationRejectedNotification(Application application) {
+        createNotification(application.getUser(), NotificationType.APPLICATION_REJECTED,
+                "지원하신 프로젝트 " + application.getProject().getTitle() + " 에 참여 거부 되었습니다");
     }
 }

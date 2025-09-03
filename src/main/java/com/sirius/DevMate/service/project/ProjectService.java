@@ -1,31 +1,30 @@
 package com.sirius.DevMate.service.project;
 
+import com.sirius.DevMate.controller.dto.response.RecruitingProjectResponseDto;
 import com.sirius.DevMate.controller.dto.request.NewProjectDto;
 import com.sirius.DevMate.controller.dto.response.PageList;
 import com.sirius.DevMate.controller.dto.request.PageRequestDto;
 import com.sirius.DevMate.controller.dto.request.ProjectSearchRequestDto;
-import com.sirius.DevMate.domain.common.project.ApplicationStatus;
 import com.sirius.DevMate.domain.common.project.MembershipRole;
 import com.sirius.DevMate.domain.common.project.MembershipStatus;
-import com.sirius.DevMate.domain.common.project.Position;
-import com.sirius.DevMate.domain.join.Application;
 import com.sirius.DevMate.domain.join.Membership;
 import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.user.User;
-import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.exception.ProjectException;
+import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.repository.user.NotificationRepository;
 import com.sirius.DevMate.repository.join.ApplicationRepository;
 import com.sirius.DevMate.repository.join.MembershipRepository;
 import com.sirius.DevMate.repository.project.ProjectRepository;
+import com.sirius.DevMate.service.join.MembershipService;
 import com.sirius.DevMate.service.user.NotificationService;
 import com.sirius.DevMate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,16 +37,37 @@ public class ProjectService {
     private final NotificationRepository notificationRepository;
     private final UserService userService;
     private final NotificationService notificationService;
+    private final MembershipService membershipService;
     private static final Integer LIST_SIZE = 10;
 
-    public void newProject(NewProjectDto newProjectDto) throws UserNotFound {
+    public void newProject(NewProjectDto newProjectDto) throws UserNotFound, ProjectException {
+
+        Integer recruitSize = newProjectDto.backendMembers() + newProjectDto.frontendMembers() +
+                newProjectDto.pmMembers() + newProjectDto.designMembers();
+
+        Integer currentSize = newProjectDto.currentBackend() + newProjectDto.currentFrontend() +
+                newProjectDto.currentDesign() + newProjectDto.currentPm();
+
+
+        if (newProjectDto.backendMembers() - newProjectDto.currentBackend() <= 0) {
+            throw new ProjectException("현재 백엔드 인원이 전체 백엔드 인원보다 많습니다!");
+        }
+        if (newProjectDto.frontendMembers() - newProjectDto.currentFrontend() <= 0) {
+            throw new ProjectException("현재 프론트 인원이 전체 프론트 인원보다 많습니다!");
+        }
+        if (newProjectDto.designMembers() - newProjectDto.currentDesign() <= 0) {
+            throw new ProjectException("현재 디자인 인원이 전체 디자인 인원보다 많습니다!");
+        }
+        if (newProjectDto.pmMembers() - newProjectDto.currentPm() <= 0) {
+            throw new ProjectException("현재 pm 인원이 전체 pm 인원보다 많습니다!");
+        }
 
         Project newProject = Project
                 .builder()
                 .title(newProjectDto.title())
                 .shortDescription(newProjectDto.shortDescription())
-                .recruitSize(newProjectDto.recruitSize())
-                .currentSize(newProjectDto.currentSize())
+                .recruitSize(recruitSize)
+                .currentSize(currentSize)
                 .startDate(newProjectDto.startDate())
                 .endDate(newProjectDto.endDate())
                 .collaborateStyle(newProjectDto.collaborateStyle())
@@ -63,21 +83,18 @@ public class ProjectService {
                 .currentPm(newProjectDto.currentPm())
                 .build();
 
-        Membership newMembership = Membership
-                .builder()
-                .user(userService.getUser())
-                .project(newProject)
-                .membershipRole(MembershipRole.LEADER)
-                .membershipStatus(MembershipStatus.PARTICIPATION)
-                .build();
+        Membership newMembership = membershipService.createMembership(
+                userService.getUser(),
+                newProject,
+                MembershipRole.LEADER,
+                MembershipStatus.PARTICIPATION
+                );
 
         projectRepository.save(newProject);
-        membershipRepository.save(newMembership);
-        newProject.getMemberships().add(newMembership);
 
     }
 
-    public Optional<Project> getProjectById(Long id) {
+    public Project getProjectById(Long id) {
          return projectRepository.findById(id);
     }
 
@@ -101,29 +118,35 @@ public class ProjectService {
                 projectSearchConditionDto.getProjectStatus());
     }
 
-    public void newApplication(Long projectId, Position position, String content) throws ProjectException, UserNotFound {
-        Optional<Project> project = projectRepository.findById(projectId);
+    public PageList<RecruitingProjectResponseDto> showRecruitingProjects() throws UserNotFound {
         User loginUser = userService.getUser();
-        if (project.isEmpty()) {
-            throw new ProjectException("존재 하지 않는 프로젝트 입니다");
+        List<Membership> leaderMemberships = membershipService.getLeaderMembership(loginUser);
+        if (leaderMemberships.isEmpty()) {
+            return new PageList<>(null, 0L);
         } else {
 
-            if (membershipRepository.existByUserId(loginUser.getUserId(), project.get().getProjectId())) {
-                throw new ProjectException("두번 이상 지원은 불가합니다");
+            List<RecruitingProjectResponseDto> recruitingProjectResponseDtos = new ArrayList<>();
+            for (Membership membership : leaderMemberships) {
+                recruitingProjectResponseDtos.add(
+                        new RecruitingProjectResponseDto(
+                                membership.getProject().getProjectId(),
+                                membership.getProject().getTitle(),
+                                membership.getProject().getRecruitSize(),
+                                membership.getProject().getCurrentSize(),
+                                membership.getProject().getBackendMembers(),
+                                membership.getProject().getCurrentBackend(),
+                                membership.getProject().getFrontendMembers(),
+                                membership.getProject().getCurrentFrontend(),
+                                membership.getProject().getDesignMembers(),
+                                membership.getProject().getCurrentDesign(),
+                                membership.getProject().getPmMembers(),
+                                membership.getProject().getCurrentPm(),
+                                membership.getProject().getProjectStatus()
+                        ));
+
             }
 
-            Application newApplication = Application.builder()
-                    .user(loginUser)
-                    .project(project.get())
-                    .applyPosition(position)
-                    .content(content)
-                    .applicationStatus(ApplicationStatus.STANDBY)
-                    .build();
-
-            applicationRepository.save(newApplication);
-            project.get().getApplications().add(newApplication);
-            notificationService.notifyApplicationSubmittedNotifications(loginUser, project.get(), newApplication);
-
+            return new PageList<>(recruitingProjectResponseDtos, (long) leaderMemberships.size());
         }
     }
 }

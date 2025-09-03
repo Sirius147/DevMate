@@ -30,8 +30,8 @@ public class ProjectRepository {
         return project;
     }
 
-    public Optional<Project> findById(Long id) {
-        return Optional.ofNullable(em.find(Project.class, id));
+    public Project findById(Long id) {
+        return em.find(Project.class, id);
     }
 
     public PageList<Project> findAll(Integer page, Integer size, String sortBy) {

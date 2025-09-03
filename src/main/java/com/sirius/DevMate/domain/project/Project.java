@@ -119,4 +119,23 @@ public class Project extends BaseTimeEntity {
     @OneToOne(mappedBy = "project")
     private ChatChannel chatChannel;
 
+    public void changeCurrentBackend() {
+        this.currentBackend++;
+    }
+
+    public void changeCurrentFrontend() {
+        this.currentFrontend++;
+    }
+
+    public void changeCurrentDesign() {
+        this.currentDesign++;
+    }
+
+    public void changeCurrentPm() {
+        this.currentPm++;
+    }
+
+    public void changeProjectStatus(ProjectStatus projectStatus) {
+        this.projectStatus = projectStatus;
+    }
 }

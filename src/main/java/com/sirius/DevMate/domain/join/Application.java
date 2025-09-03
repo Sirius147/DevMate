@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 
 @Entity
 @Table(name = "application",
@@ -44,4 +46,19 @@ public class Application extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private ApplicationStatus applicationStatus;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
+    }
+
+    public void changeApplicationStatus(ApplicationStatus applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
 }

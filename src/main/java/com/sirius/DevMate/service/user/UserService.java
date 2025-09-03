@@ -39,6 +39,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final StackRepository stackRepository;
+    private final NotificationService notificationService;
 
     // 로그인한 유저 불러오기
     public User getUser() throws UserNotFound {
@@ -235,21 +236,21 @@ public class UserService {
 
     }
 
-    public List<MembershipDto> getMemberShips() throws UserNotFound {
-        User user = getUser();
-        List<Membership> memberships = user.getMyMemberships();
-        List<MembershipDto> membershipDtos = new ArrayList<>();
-        for (Membership membership : memberships) {
-            membershipDtos.add(new MembershipDto(
-                    membership.getProject().getTitle(),
-                    membership.getProject().getProjectStatus(),
-                    membership.getMembershipStatus(),
-                    membership.getMembershipRole()));
-        }
-
-        return membershipDtos;
-
-    }
+//    public List<MembershipDto> getMemberShips() throws UserNotFound {
+//        User user = getUser();
+//        List<Membership> memberships = user.getMyMemberships();
+//        List<MembershipDto> membershipDtos = new ArrayList<>();
+//        for (Membership membership : memberships) {
+//            membershipDtos.add(new MembershipDto(
+//                    membership.getProject().getTitle(),
+//                    membership.getProject().getProjectStatus(),
+//                    membership.getMembershipStatus(),
+//                    membership.getMembershipRole()));
+//        }
+//
+//        return membershipDtos;
+//
+//    }
 
     public boolean notifyUserNotifications() throws UserNotFound {
         User loginUser = getUser();
@@ -281,7 +282,7 @@ public class UserService {
 
 //            } // 읽은 알림 -> 삭제 처리
 //            else {
-//                userRepository.expireNotification(notification);
+//                notificationService.expireNotification(notification);
 //            }
         }
 

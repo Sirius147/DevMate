@@ -35,4 +35,9 @@ public class MembershipRepository {
                 .getSingleResult() > 0);
     }
 
+    public Membership findByUserId(Long userId, Long projectId) {
+        String jpql = "select m from Membership m where m.user.userId = :userId and m.project.projectId = :projectId";
+        return em.createQuery(jpql, Membership.class)
+                .getSingleResult();
+    }
 }

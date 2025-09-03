@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public record NewProjectDto(@NotNull @Size(min = 2, max = 20, message = "20글자 안쪽이어야 합니다") String title,
                             @NotNull @Size(min = 5, max = 300, message = "300글자 안쪽이어야 합니다") String shortDescription,
-                            @Positive @NotNull Integer recruitSize, @PositiveOrZero @NotNull Integer currentSize,
+//                            @Positive @NotNull Integer recruitSize, @PositiveOrZero @NotNull Integer currentSize,
                             LocalDate startDate, LocalDate endDate, @NotNull CollaborateStyle collaborateStyle,
                             @NotNull Regions preferredRegion, @NotNull SkillLevel projectLevel,
                             @PositiveOrZero @NotNull Integer backendMembers,

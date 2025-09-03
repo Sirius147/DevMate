@@ -19,5 +19,9 @@ public class NotificationRepository {
         }
         return notification;
     }
+
+    public void delete(Notification notification) {
+        em.remove(em.contains(notification) ? notification : em.merge(notification));
+    }
 }
 
