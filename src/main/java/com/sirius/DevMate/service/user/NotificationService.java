@@ -1,6 +1,7 @@
 package com.sirius.DevMate.service.user;
 
 import com.sirius.DevMate.domain.common.project.MembershipRole;
+import com.sirius.DevMate.domain.common.project.MembershipStatus;
 import com.sirius.DevMate.domain.common.sys.NotificationType;
 import com.sirius.DevMate.domain.join.Application;
 import com.sirius.DevMate.domain.join.Membership;
@@ -10,6 +11,7 @@ import com.sirius.DevMate.domain.user.User;
 import com.sirius.DevMate.exception.ProjectException;
 import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.repository.user.NotificationRepository;
+import com.sirius.DevMate.service.join.MembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +88,7 @@ public class NotificationService {
 
     public void notifyProjectStartNotification(List<Membership> memberships) {
         for (Membership membership : memberships) {
+            membership.changeMembershipStatus(MembershipStatus.PARTICIPATION);
             createNotification(membership.getUser(), NotificationType.PROJECT_START,
                     "프로젝트" + membership.getProject().getTitle() + "(이)가 시작하였습니다! " +
                             "내 프로젝트 창에서 확인하세요");

@@ -125,7 +125,7 @@ public class ApplicationService {
             Membership applicantMembership = membershipService.createMembership(application.getUser(),
                     project,
                     MembershipRole.MEMBER,
-                    MembershipStatus.PARTICIPATION
+                    MembershipStatus.WAITING
             );
 
             // 프로젝트 인원 변경
@@ -173,6 +173,7 @@ public class ApplicationService {
         for (Application application : applications) {
             applicationResponseDtos.add(
                     new ApplicationResponseDto(
+                            application.getApplicationId(),
                             application.getProject().getTitle(),
                             application.getApplicationStatus(),
                             application.getContent()
@@ -182,4 +183,10 @@ public class ApplicationService {
         return new PageList<>(applicationResponseDtos, (long) applicationResponseDtos.size());
     }
 
+    public void deleteApplicationByApplicationId(Long applicationId) throws UserNotFound {
+        Application application = applicationRepository.findById(applicationId);
+        application.getUser().getMyApplications().remove(application);
+        application.getProject().getApplications().remove(application);
+        applicationRepository.delete(application);
+    }
 }

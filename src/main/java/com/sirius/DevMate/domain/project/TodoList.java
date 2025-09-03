@@ -9,11 +9,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "to_do_list")
-@Getter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TodoList extends BaseTimeEntity {
 
     @Id
@@ -45,10 +49,17 @@ public class TodoList extends BaseTimeEntity {
     private LocalDate endDate;
 
     @Column(nullable = false)
-    private boolean isDone;
+    private boolean done;
 
     @PrePersist
     public void prePersist() {
-        this.isDone = false;
+        this.createdAt = Instant.now();
+        this.updatedAt = createdAt;
+        this.done = false;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
     }
 }

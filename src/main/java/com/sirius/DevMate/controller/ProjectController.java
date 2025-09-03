@@ -1,14 +1,12 @@
 package com.sirius.DevMate.controller;
 
-import com.sirius.DevMate.controller.dto.response.ApplicationResponseDto;
-import com.sirius.DevMate.controller.dto.response.PageList;
-import com.sirius.DevMate.controller.dto.response.RecruitingProjectApplicationsDto;
-import com.sirius.DevMate.controller.dto.response.RecruitingProjectResponseDto;
+import com.sirius.DevMate.controller.dto.response.*;
 import com.sirius.DevMate.exception.ProjectException;
 import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.service.join.ApplicationService;
 import com.sirius.DevMate.service.join.MembershipService;
 import com.sirius.DevMate.service.project.ProjectService;
+import com.sirius.DevMate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/my-project")
 public class ProjectController {
 
+    private final UserService userService;
     private final ProjectService projectService;
     private final MembershipService membershipService;
     private final ApplicationService applicationService;
@@ -53,8 +52,35 @@ public class ProjectController {
         return applicationService.getApplicationsByUserId();
     }
 
+    @DeleteMapping("/applied-project/{applicationId}")
+    public ResponseEntity<Void> deleteApplication(@PathVariable("applicationId") Long applicationId) throws UserNotFound {
+        applicationService.deleteApplicationByApplicationId(applicationId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
+    @GetMapping("/participation")
+    public PageList<ParticipatingProjectResponseDto> getParticipatingProjects() throws UserNotFound {
+        return userService.showParticipatingProjects();
+    }
 
+    @GetMapping("/participation/{projectId}/chat-channel")
+    public void getChatChannel() {
+        return;
+    }
 
+    @GetMapping("/participation/{projectId}/docs")
+    public PageList<DocDto> getProjectDoc(@PathVariable("projectId") Long projectId) {
+        return projectService.getDoc(projectId);
+    }
+
+    @GetMapping("/participation/{projectId}/todoLists")
+    public PageList<TodoListDto> getProjectTodoList(@PathVariable("projectId") Long projectId) {
+        return projectService.getTodoList(projectId);
+    }
+
+    @GetMapping("/completed")
+    public PageList<CompletedProjectResponseDto> getCompletedProjects() throws UserNotFound {
+        return userService.showCompletedProjects();
+    }
 
 }

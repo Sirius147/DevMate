@@ -33,4 +33,8 @@ public class ApplicationRepository {
                 .getResultList();
         return applications;
     }
+
+    public void delete(Application application) {
+        em.remove(em.contains(application)? application : em.merge(application));
+    }
 }

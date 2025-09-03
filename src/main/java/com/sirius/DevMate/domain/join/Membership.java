@@ -37,4 +37,8 @@ public class Membership extends BaseTimeEntity {
     @Column(nullable = false, length = 50)
     private MembershipStatus membershipStatus;
 
+    public void changeMembershipStatus(MembershipStatus membershipStatus) {
+        this.membershipStatus = membershipStatus;
+    }
+
 }

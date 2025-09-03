@@ -1,14 +1,18 @@
 package com.sirius.DevMate.service.project;
 
+import com.sirius.DevMate.controller.dto.response.DocDto;
 import com.sirius.DevMate.controller.dto.response.RecruitingProjectResponseDto;
 import com.sirius.DevMate.controller.dto.request.NewProjectDto;
 import com.sirius.DevMate.controller.dto.response.PageList;
 import com.sirius.DevMate.controller.dto.request.PageRequestDto;
 import com.sirius.DevMate.controller.dto.request.ProjectSearchRequestDto;
+import com.sirius.DevMate.controller.dto.response.TodoListDto;
 import com.sirius.DevMate.domain.common.project.MembershipRole;
 import com.sirius.DevMate.domain.common.project.MembershipStatus;
 import com.sirius.DevMate.domain.join.Membership;
+import com.sirius.DevMate.domain.project.Doc;
 import com.sirius.DevMate.domain.project.Project;
+import com.sirius.DevMate.domain.project.TodoList;
 import com.sirius.DevMate.domain.user.User;
 import com.sirius.DevMate.exception.ProjectException;
 import com.sirius.DevMate.exception.UserNotFound;
@@ -148,5 +152,46 @@ public class ProjectService {
 
             return new PageList<>(recruitingProjectResponseDtos, (long) leaderMemberships.size());
         }
+    }
+
+    public PageList<TodoListDto> getTodoList(Long projectId) {
+        Project project = projectRepository.findById(projectId);
+        List<TodoListDto> todoListDtos = new ArrayList<>();
+        for (TodoList todoList : project.getTodoLists()) {
+            todoListDtos.add(
+                    new TodoListDto(
+                            todoList.getToDoListId(),
+                            todoList.getProject().getTitle(),
+                            todoList.getTitle(),
+                            todoList.getPosition(),
+                            todoList.getContent(),
+                            todoList.getPriority(),
+                            todoList.getStartDate(),
+                            todoList.getEndDate(),
+                            todoList.isDone(),
+                            todoList.getUpdatedAt()
+                    )
+            );
+        }
+        return new PageList<>(todoListDtos, (long) project.getTodoLists().size());
+    }
+
+    public PageList<DocDto> getDoc(Long projectId) {
+        Project project = projectRepository.findById(projectId);
+        List<DocDto> docDtos = new ArrayList<>();
+        for (Doc doc : project.getDocs()) {
+            docDtos.add(
+                    new DocDto(
+                            doc.getDocId(),
+                            doc.getProject().getTitle(),
+                            doc.getName(),
+                            doc.getMethod(),
+                            doc.getPath(),
+                            doc.getResponseExample(),
+                            doc.getParameter()
+                    )
+            );
+        }
+        return new PageList<>(docDtos, (long) docDtos.size());
     }
 }

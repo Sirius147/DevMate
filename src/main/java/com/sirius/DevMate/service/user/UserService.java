@@ -4,13 +4,13 @@ import com.sirius.DevMate.config.security.controller.dto.request.BasicSetUpDto;
 import com.sirius.DevMate.config.security.controller.dto.request.DetailSetUpDto;
 import com.sirius.DevMate.config.security.controller.dto.request.StackSetUpDto;
 import com.sirius.DevMate.controller.dto.request.UpdateProfileDto;
-import com.sirius.DevMate.controller.dto.response.MembershipDto;
-import com.sirius.DevMate.controller.dto.response.MyPageDto;
-import com.sirius.DevMate.controller.dto.response.NotificationDto;
-import com.sirius.DevMate.controller.dto.response.PageList;
+import com.sirius.DevMate.controller.dto.response.*;
+import com.sirius.DevMate.domain.common.project.MembershipStatus;
+import com.sirius.DevMate.domain.common.project.ProjectStatus;
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.common.user.StackType;
 import com.sirius.DevMate.domain.join.Membership;
+import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.user.Notification;
 import com.sirius.DevMate.domain.user.Stack;
 import com.sirius.DevMate.domain.user.User;
@@ -116,8 +116,8 @@ public class UserService {
 
     public void removeStack(Stack stack) throws UserNotFound {
         User loginUser = getUser();
-        stackRepository.deleteByUser(loginUser);
         loginUser.getStacks().remove(stack);
+        stackRepository.deleteByUser(loginUser);
     }
 
     public MyPageDto getMyPage() throws UserNotFound {
@@ -292,4 +292,47 @@ public class UserService {
     public void withdrawal() throws UserNotFound {
         userRepository.delete(getUser());
     }
+
+    public PageList<ParticipatingProjectResponseDto> showParticipatingProjects() throws UserNotFound {
+
+        User loginUser = getUser();
+
+        List<Membership> memberships = loginUser.getMyMemberships();
+        List<ParticipatingProjectResponseDto> participatingProjectResponseDtos = new ArrayList<>();
+        for (Membership membership : memberships) {
+            if ((membership.getMembershipStatus() == MembershipStatus.PARTICIPATION) &&
+                    (membership.getProject().getProjectStatus() == ProjectStatus.IN_PROGRESS)) {
+                participatingProjectResponseDtos.add(new ParticipatingProjectResponseDto(
+                        membership.getProject().getProjectId(),
+                        membership.getProject().getTitle(),
+                        membership.getProject().getShortDescription(),
+                        membership.getProject().getProjectStatus()
+                ));
+            }
+        }
+
+        return new PageList<>(participatingProjectResponseDtos, (long) participatingProjectResponseDtos.size());
+    }
+
+    public PageList<CompletedProjectResponseDto> showCompletedProjects() throws UserNotFound {
+
+        User loginUser = getUser();
+        List<Membership> memberships = loginUser.getMyMemberships();
+        List<CompletedProjectResponseDto> completedProjectResponseDtos = new ArrayList<>();
+        for (Membership membership : memberships) {
+            if ((membership.getMembershipStatus() == MembershipStatus.PARTICIPATION) &&
+                    (membership.getProject().getProjectStatus() == ProjectStatus.COMPLETED)) {
+                completedProjectResponseDtos.add(new CompletedProjectResponseDto(
+                        membership.getProject().getProjectId(),
+                        membership.getProject().getTitle(),
+                        membership.getProject().getShortDescription(),
+                        membership.getProject().getProjectStatus()
+                ));
+            }
+        }
+
+        return new PageList<>(completedProjectResponseDtos, (long) completedProjectResponseDtos.size());
+    }
+
 }
+

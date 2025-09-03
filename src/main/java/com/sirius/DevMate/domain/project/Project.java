@@ -100,6 +100,9 @@ public class Project extends BaseTimeEntity {
     }
     @PreUpdate void preUpdate() { updatedAt = Instant.now(); }
 
+    @OneToOne(mappedBy = "project")
+    private ChatChannel chatChannel;
+
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
     private List<Membership> memberships = new ArrayList<>();
 
@@ -116,8 +119,6 @@ public class Project extends BaseTimeEntity {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
     private List<Doc> docs = new ArrayList<>();
 
-    @OneToOne(mappedBy = "project")
-    private ChatChannel chatChannel;
 
     public void changeCurrentBackend() {
         this.currentBackend++;
