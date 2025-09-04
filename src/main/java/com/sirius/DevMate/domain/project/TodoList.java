@@ -62,4 +62,32 @@ public class TodoList extends BaseTimeEntity {
     public void preUpdate() {
         this.updatedAt = Instant.now();
     }
+
+    public void changeTitle(Object title) {
+        this.title = (String) title;
+    }
+
+    public void changePosition(Position position) {
+        this.position = position;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
+    }
+
+    public void changePriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public void changeStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void changeEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public void changeDone(Boolean done) {
+        this.done = done;
+    }
 }

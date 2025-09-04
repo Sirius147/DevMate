@@ -146,7 +146,8 @@ public class ApplicationService {
             }
             // 프로젝트가 진행 가능 할 시에
             if (project.getCurrentSize().equals(project.getRecruitSize())) {
-                project.changeProjectStatus(ProjectStatus.IN_PROGRESS);
+//                project.changeProjectStatus(ProjectStatus.IN_PROGRESS);
+                projectService.endRecruitingStartProject(projectId);
                 notificationService.notifyProjectStartNotification(project.getMemberships());
             }
             // 그렇지 않은 경우

@@ -29,6 +29,7 @@ public class ChatMembership {
 
     @Column(nullable = false)
     private Instant lastReadAt;
+    // lastReadChatMessageId; cursor형으로
 
 
 }

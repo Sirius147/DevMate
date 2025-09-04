@@ -139,4 +139,8 @@ public class Project extends BaseTimeEntity {
     public void changeProjectStatus(ProjectStatus projectStatus) {
         this.projectStatus = projectStatus;
     }
+
+    public void completeProject() {
+        this.projectStatus = ProjectStatus.COMPLETED;
+    }
 }

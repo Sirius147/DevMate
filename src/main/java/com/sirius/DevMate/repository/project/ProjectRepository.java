@@ -5,7 +5,10 @@ import com.sirius.DevMate.domain.common.project.ProjectStatus;
 import com.sirius.DevMate.domain.common.user.PreferredAtmosphere;
 import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
+import com.sirius.DevMate.domain.join.Review;
+import com.sirius.DevMate.domain.project.Doc;
 import com.sirius.DevMate.domain.project.Project;
+import com.sirius.DevMate.domain.project.TodoList;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,6 +30,15 @@ public class ProjectRepository {
             return em.merge(project);
         }
         return project;
+    }
+
+    public Doc saveProjectDoc(Doc doc) {
+        if (doc.getDocId() == null) {
+            em.persist(doc);
+        } else {
+            return em.merge(doc);
+        }
+        return doc;
     }
 
     public Project findById(Long id) {
@@ -107,4 +118,37 @@ public class ProjectRepository {
         return new PageList<>(projects, totalCount);
     }
 
+    public Doc findDocById(Long docId) {
+        return em.find(Doc.class, docId);
+    }
+
+    public void deleteDoc(Long docId) {
+        Doc doc = findDocById(docId);
+        em.remove(em.contains(doc) ? doc : em.merge(doc));
+    }
+
+    public void saveProjectTodoList(TodoList newTodoList) {
+        if (newTodoList.getToDoListId() == null) {
+            em.persist(newTodoList);
+        } else {
+            em.merge(newTodoList);
+        }
+    }
+
+    public TodoList findTodoListById(Long todoListId) {
+        return em.find(TodoList.class, todoListId);
+    }
+
+    public void deleteTodoList(Long todoListId) {
+        TodoList todoList = findTodoListById(todoListId);
+        em.remove(em.contains(todoList) ? todoList : em.merge(todoList));
+    }
+
+    public void saveReview(Review newReview) {
+        if (newReview.getReviewId() == null) {
+            em.persist(newReview);
+        } else {
+            em.merge(newReview);
+        }
+    }
 }

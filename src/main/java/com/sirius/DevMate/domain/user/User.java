@@ -9,6 +9,7 @@ import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
 import com.sirius.DevMate.domain.join.Application;
 import com.sirius.DevMate.domain.join.Membership;
+import com.sirius.DevMate.domain.join.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -88,6 +89,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<Application> myApplications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
+    private List<Review> myReviews = new ArrayList<>();
 
     @PrePersist void prePersist() {
         if (createdAt == null) {
