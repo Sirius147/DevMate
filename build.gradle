@@ -44,6 +44,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'io.lettuce:lettuce-core' // 기본 커넥터(자동 포함)
 
+	// aws 셋팅 (aws + springboot 통합 라이브러리, 앱에서 s3버킷 접근을 도와주는 라이브러리)
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter:3.1.1'
+//	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.767'
+//	implementation "com.amazonaws:aws-java-sdk-s3:1.12.788"
+	implementation platform("software.amazon.awssdk:bom:2.29.28")
+	implementation "software.amazon.awssdk:s3"
+	implementation "org.apache.tika:tika-core:2.9.2" // mime 검출(옵션)
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

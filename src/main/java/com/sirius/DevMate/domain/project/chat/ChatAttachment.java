@@ -18,9 +18,10 @@ public class ChatAttachment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_message_id")
     private ChatMessage chatMessage;
-
-    @Column(length = 300)
-    private String url;
+//
+//    @Column(length = 300)
+//    private String url;
+    private String mimeType;
 
     @Column(length = 300)
     private String storageKey;

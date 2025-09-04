@@ -99,3 +99,17 @@ app:
 #  /auth/refresh도 401/403 → 로그인 페이지로 재진입(/oauth2/authorization/{provider}).
 #
 # 회전/안전성(권장): refresh는 DB 화이트리스트(+jti)로 1회용 회전하고, 로그아웃 시 폐기. 탈취 대응력이 크게 올라가.
+
+cloud:
+  aws:
+    s3:
+      bucket: devmate-sirius-project
+      region: us-east-2
+    credentials:
+      access-key: ${AWS-ACCESS-KEY}
+      secret-key: ${AWS-SECRET-KEY}
+
+chat:
+  upload:
+    max-size-bytes: 10485760
+    allowed-mime: image/png,image/jpeg,application/pdf
