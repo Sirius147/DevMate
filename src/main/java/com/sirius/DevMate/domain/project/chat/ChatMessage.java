@@ -8,11 +8,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "chat_message")
+@Table(name = "chat_message", uniqueConstraints = @UniqueConstraint(name = "uk_chat_message", columnNames =
+        {"chat_membership", "created_at"}))
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ChatMessage extends BaseTimeEntity {
     @Id
@@ -37,5 +39,10 @@ public class ChatMessage extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "chatMessage", fetch = FetchType.LAZY) @Builder.Default
     private List<ChatAttachment> chatAttachments = new ArrayList<>();
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+    }
 
 }
