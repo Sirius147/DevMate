@@ -52,6 +52,9 @@ dependencies {
 	implementation "software.amazon.awssdk:s3"
 	implementation "org.apache.tika:tika-core:2.9.2" // mime 검출(옵션)
 
+	// Simple Text Oriented Message Protocol
+	implementation "org.springframework.boot:spring-boot-starter-websocket"
+	implementation "org.springframework:spring-messaging"
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
