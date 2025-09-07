@@ -80,22 +80,18 @@ public class JwtTokenService {
         return UUID.randomUUID().toString();
     }
 
-//    public String createToken(Long userId, String roles, Long expSeconds, String type) {
-//
-//        var now = Instant.now();
-//        var claims = JwtClaimsSet.builder()
-//                .issuer("devmate")
-//                .issuedAt(now)
-//                .expiresAt(now.plusSeconds(expSeconds))
-//                .subject(String.valueOf(userId))
-//                .claim("roles", roles)
-//                .claim("type", type)
-//                .build();
-//        var header = JwsHeader.with(MacAlgorithm.HS256)
-//                .build();
-//
-//        return jwtEncoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
-//    }
+    public Long getUserIdFromAccess(String token) {
+        Jwt jwt = jwtDecoder.decode(token);
+        String type = jwt.getClaimAsString("type");
+        if (!type.equals("access")) {
+            throw new IllegalArgumentException("Not an access token");
+        }
+        String sub = jwt.getSubject();
+        if (sub != null && !sub.isBlank()) {
+            return Long.valueOf(sub);
+        }
+        throw new IllegalStateException("userId(sub) not present in token");
+    }
 
     public Jwt isValidRefresh(String token) {
         Jwt jwt = jwtDecoder.decode(token);
