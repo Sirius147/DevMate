@@ -1,4 +1,4 @@
-package com.sirius.DevMate.controller.dto.chat;
+package com.sirius.DevMate.controller.chat.dto;
 
 import java.util.List;
 

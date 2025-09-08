@@ -25,7 +25,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // stomp 접속 url
         registry.addEndpoint("/ws-chat")
                 .setAllowedOriginPatterns("*")
-                .addInterceptors(new JwtHandshakeInterceptor());
+                .addInterceptors(new JwtHandshakeInterceptor())
+                .withSockJS();
     }
 
     @Override

@@ -1,16 +1,17 @@
 package com.sirius.DevMate.controller.chat;
 
-import com.sirius.DevMate.controller.dto.chat.ChatMessageDto;
-import com.sirius.DevMate.controller.dto.chat.SendMessageRequest;
-import com.sirius.DevMate.controller.dto.chat.stomp.StompMarkRead;
-import com.sirius.DevMate.controller.dto.chat.stomp.StompMessageEvent;
-import com.sirius.DevMate.controller.dto.chat.stomp.StompSendMessage;
+import com.sirius.DevMate.controller.chat.dto.ChatMessageDto;
+import com.sirius.DevMate.controller.chat.dto.SendMessageRequest;
+import com.sirius.DevMate.controller.chat.dto.stomp.StompMarkRead;
+import com.sirius.DevMate.controller.chat.dto.stomp.StompMessageEvent;
+import com.sirius.DevMate.controller.chat.dto.stomp.StompSendMessage;
 import com.sirius.DevMate.service.project.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,7 +26,7 @@ public class StompController {
     // 메시지 전송: /app/chat.channels.{channelId}.send
     @MessageMapping("/chat.channels.{channelId}.send")
     public void sendMessage(@DestinationVariable Long channelId,
-                            StompSendMessage payload,
+                            @RequestBody StompSendMessage payload,
                             Principal principal) {
         Long userId = Long.valueOf(principal.getName()); // UserIdPrincipal에서 id를 String name으로 저장
 
@@ -59,7 +60,7 @@ public class StompController {
     // 읽음 처리: /app/chat.channels.{channelId}.read
     @MessageMapping("/chat.channels.{channelId}.read")
     public void markRead(@DestinationVariable Long channelId,
-                         StompMarkRead payload,
+                         @RequestBody StompMarkRead payload,
                          Principal principal) {
         Long userId = Long.valueOf(principal.getName());
         chatService.markRead(channelId, userId, payload.lastReadMessageId());

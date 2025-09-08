@@ -22,9 +22,6 @@ public class ChatAttachment {
     @Column(length = 300)
     private String url;
 
-    private String mimeType;
-
-
     @Column(length = 300)
     private String filename;
 

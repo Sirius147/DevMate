@@ -1,8 +1,8 @@
 package com.sirius.DevMate.service.project.chat;
 
 import com.sirius.DevMate.config.s3.service.S3Service;
-import com.sirius.DevMate.controller.dto.chat.ChatMessageDto;
-import com.sirius.DevMate.controller.dto.chat.SendMessageRequest;
+import com.sirius.DevMate.controller.chat.dto.ChatMessageDto;
+import com.sirius.DevMate.controller.chat.dto.SendMessageRequest;
 import com.sirius.DevMate.domain.common.sys.Direction;
 import com.sirius.DevMate.domain.common.sys.MessageType;
 import com.sirius.DevMate.domain.project.chat.ChatAttachment;
@@ -45,14 +45,14 @@ public class ChatService {
         // 2) 메시지 생성 (수정 불가 정책: 엔티티에 수정용 세터/메서드 두지 않기)
         ChatChannel channel = projectRepository.findChatChannelByChatChannelId(channelId);
 
-        ChatMessage msg = ChatMessage.builder()
+        ChatMessage chatMessage = ChatMessage.builder()
                 .chatChannel(channel)
                 .chatMembership(membership)
                 .messageType(MessageType.TEXT) // 파일만 전송하면 FILE/IMAGE 등으로 설정 가능
                 .content(sendMessageRequest.content())
                 .build();
 
-        chatMessageRepository.save(msg);
+        chatMessageRepository.save(chatMessage);
 
         // 3) 첨부 저장 (있으면)
         if (sendMessageRequest.attachments() != null && !sendMessageRequest.attachments().isEmpty()) {
@@ -76,7 +76,7 @@ public class ChatService {
 
             List<ChatAttachment> list = sendMessageRequest.attachments().stream().map(a ->
                     ChatAttachment.builder()
-                            .chatMessage(msg)
+                            .chatMessage(chatMessage)
                             .storageKey(a.storageKey())
                             .url(a.url())
                             .filename(a.filename())
@@ -86,11 +86,11 @@ public class ChatService {
             ).toList();
             chatAttachmentRepository.saveAll(list);
 
-            msg.getChatAttachments().addAll(list);
+            chatMessage.getChatAttachments().addAll(list);
         }
 
         // 4) DTO로 변환
-        return toDto(msg);
+        return toDto(chatMessage);
     }
 
     private ChatMessageDto toDto(ChatMessage m) {
@@ -117,6 +117,7 @@ public class ChatService {
     }
 
     public List<ChatMessageDto> listMessages(Long channelId, Long anchorId, Direction dir, int limit) {
+
         List<ChatMessage> list = (dir == Direction.NEWER)
                 ? chatMessageRepository.findNewer(channelId, anchorId, limit)
                 : chatMessageRepository.findOlder(channelId, anchorId, limit);
@@ -128,10 +129,11 @@ public class ChatService {
     }
 
     // 읽음 처리: 특정 messageId까지 읽음
-    public void markRead(Long channelId, Long userId, Long messageId) {
+    public Long markRead(Long channelId, Long userId, Long messageId) {
         ChatMembership membership = chatMembershipRepository.findByChannelAndUser(channelId, userId);
         if (membership == null) throw new IllegalStateException("채널에 가입되지 않은 사용자입니다.");
         chatMembershipRepository.markReadUpTo(membership.getChatMembershipId(), messageId);
+        return messageId;
     }
 
     public long unreadCount(Long channelId, Long userId) {
@@ -141,4 +143,8 @@ public class ChatService {
         return chatMessageRepository.countUnread(channelId, last);
     }
 
+    public Long getLastReadChatMessageId(Long channelId, Long userId) {
+        ChatMembership chatMembership = chatMembershipRepository.findByChannelAndUser(channelId, userId);
+        return chatMembership.getLastReadMessageId();
+    }
 }
