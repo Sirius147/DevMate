@@ -25,13 +25,13 @@ public class UpdateTodoListRequestDto {
 
     public Map<String, Object> toMap() {
         Map<String,Object> map = new HashMap<>();
-        if (!title.isBlank()) {
+        if (title != null) {
             map.put("title", title);
         }
         if (position != null) {
             map.put("position", position);
         }
-        if (!content.isBlank()) {
+        if (content != null) {
             map.put("content", content);
         }
         if (priority != null) {

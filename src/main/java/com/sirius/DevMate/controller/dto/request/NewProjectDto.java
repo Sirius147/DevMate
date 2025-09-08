@@ -19,6 +19,7 @@ public record NewProjectDto(@NotNull @Size(min = 2, max = 20, message = "20ê¸€ìž
                             @PositiveOrZero @NotNull Integer frontendMembers,
                             @PositiveOrZero @NotNull Integer currentFrontend,
                             @PositiveOrZero @NotNull Integer designMembers,
-                            @PositiveOrZero @NotNull Integer currentDesign, @PositiveOrZero @NotNull Integer pmMembers,
+                            @PositiveOrZero @NotNull Integer currentDesign,
+                            @PositiveOrZero @NotNull Integer pmMembers,
                             @PositiveOrZero @NotNull Integer currentPm) {
 }

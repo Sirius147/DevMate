@@ -21,13 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "project", indexes = {
-        @Index(name = "idx_project_title", columnList = "title"),
-        @Index(name = "idx_project_region", columnList = "preferred_region"),
-        @Index(name = "idx_project_level", columnList = "project_level"),
-        @Index(name = "idx_project_collaborate_style", columnList = "collaborate_style"),
-        @Index(name = "idx_project_dates", columnList = "start_date, end_date")
-})
+@Table(name = "project")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -65,7 +59,8 @@ public class Project extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private SkillLevel projectLevel;
 
-    @Column(nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "project_status", nullable = false, length = 30)
     private ProjectStatus projectStatus;
 
     @Column(nullable = false)
@@ -103,20 +98,20 @@ public class Project extends BaseTimeEntity {
     @OneToOne(mappedBy = "project")
     private ChatChannel chatChannel;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<Membership> memberships = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private List<Application> applications = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<TodoList> todoLists = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<Doc> docs = new ArrayList<>();
 
 
@@ -142,5 +137,9 @@ public class Project extends BaseTimeEntity {
 
     public void completeProject() {
         this.projectStatus = ProjectStatus.COMPLETED;
+    }
+
+    public void openChatChannel(ChatChannel chatChannel) {
+        this.chatChannel = chatChannel;
     }
 }

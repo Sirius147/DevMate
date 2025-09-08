@@ -2,6 +2,7 @@ package com.sirius.DevMate.config.websokect;
 
 import com.sirius.DevMate.config.security.jwt.service.JwtTokenService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class StompAuthChannelInterceptor implements ChannelInterceptor {
@@ -26,6 +28,7 @@ public class StompAuthChannelInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
+        log.info("=====STOMPAUTHCHANNELINTERCEPTOR . PRESEND");
         StompHeaderAccessor acc = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
         if (acc == null) return message;
 

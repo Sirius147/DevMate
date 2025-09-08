@@ -13,7 +13,7 @@ import java.util.List;
 public record MyPageDto(String name, String email, String nickname, String intro,
                         Regions region, SkillLevel skillLevel, Integer popularity,
                         PreferredAtmosphere preferredAtmosphere, CollaborateStyle collaborateStyle,
-                        Position position, List<Stack> stackList) {
+                        Position position, List<StackResponseDto> stackResponseDtos) {
 
 
 }

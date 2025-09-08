@@ -19,19 +19,19 @@ public class UpdateDocRequestDto {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
-        if (!name.isBlank()) {
+        if (name != null) {
             map.put("name", name);
         }
         if (method != null) {
             map.put("method", method);
         }
-        if (!path.isBlank()) {
+        if (path != null) {
             map.put("path", path);
         }
-        if (!responseExample.isBlank()) {
+        if (responseExample != null) {
             map.put("responseExample", responseExample);
         }
-        if (!parameter.isBlank()) {
+        if (parameter != null) {
             map.put("parameter", parameter);
         }
         return map;

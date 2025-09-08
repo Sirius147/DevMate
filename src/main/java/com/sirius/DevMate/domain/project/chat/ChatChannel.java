@@ -31,10 +31,10 @@ public class ChatChannel extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer size;
 
-    @OneToMany(mappedBy = "chatChannel", fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "chatChannel", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<ChatMembership> chatMemberships = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chatChannel", fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "chatChannel", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<ChatMessage> chatMessages = new ArrayList<>();
 
 }

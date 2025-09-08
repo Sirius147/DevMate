@@ -101,6 +101,7 @@ public class ApplicationService {
             for (Application application : projectById.getApplications()) {
                 recruitingProjectApplicationsDtos.add(
                         new RecruitingProjectApplicationsDto(
+                                application.getApplicationId(),
                                 application.getUser().getNickname(),
                                 application.getApplyPosition(),
                                 application.getContent(),

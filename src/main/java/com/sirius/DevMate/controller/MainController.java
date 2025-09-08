@@ -40,8 +40,8 @@ public class MainController {
     }
 
     @ResponseBody
-    @GetMapping("/projects")
-    public PageList<Project> searchProject(@RequestBody ProjectSearchRequestDto projectSearchRequestDto) {
+    @PostMapping("/projects")
+    public PageList<AllProjectsResponseDto> searchProject(@RequestBody ProjectSearchRequestDto projectSearchRequestDto) {
         return projectService.searchProject(projectSearchRequestDto);
     }
 

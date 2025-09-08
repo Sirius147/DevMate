@@ -78,19 +78,19 @@ public class User extends BaseTimeEntity {
     @Column(length = 20)
     private Position position; // 디자인/백엔드/프론트/기획
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true) @Builder.Default
     private List<Stack> stacks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true) @Builder.Default
     private List<Notification> notifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
+    @OneToMany(mappedBy = "user",  orphanRemoval = true) @Builder.Default
     private List<Membership> myMemberships = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true) @Builder.Default
     private List<Application> myApplications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true) @Builder.Default
     private List<Review> myReviews = new ArrayList<>();
 
     @PrePersist void prePersist() {

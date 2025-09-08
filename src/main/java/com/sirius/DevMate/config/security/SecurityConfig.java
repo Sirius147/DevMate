@@ -45,6 +45,8 @@ public class SecurityConfig {
                                 , "/css/**", "/js/**", "/images/**", "/favicon.ico"
                                 , "/oauth2/**"
                                 , "/auth/**"
+                                ,"/.well-known/**"
+                                , "/ws-chat/**"     // stomp
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -55,16 +55,16 @@ public class ProjectService {
                 newProjectDto.currentDesign() + newProjectDto.currentPm();
 
 
-        if (newProjectDto.backendMembers() - newProjectDto.currentBackend() <= 0) {
+        if (newProjectDto.backendMembers() - newProjectDto.currentBackend() < 0) {
             throw new ProjectException("현재 백엔드 인원이 전체 백엔드 인원보다 많습니다!");
         }
-        if (newProjectDto.frontendMembers() - newProjectDto.currentFrontend() <= 0) {
+        if (newProjectDto.frontendMembers() - newProjectDto.currentFrontend() < 0) {
             throw new ProjectException("현재 프론트 인원이 전체 프론트 인원보다 많습니다!");
         }
-        if (newProjectDto.designMembers() - newProjectDto.currentDesign() <= 0) {
+        if (newProjectDto.designMembers() - newProjectDto.currentDesign() < 0) {
             throw new ProjectException("현재 디자인 인원이 전체 디자인 인원보다 많습니다!");
         }
-        if (newProjectDto.pmMembers() - newProjectDto.currentPm() <= 0) {
+        if (newProjectDto.pmMembers() - newProjectDto.currentPm() < 0) {
             throw new ProjectException("현재 pm 인원이 전체 pm 인원보다 많습니다!");
         }
 
@@ -113,20 +113,74 @@ public class ProjectService {
         return membershipRepository.findByProjectId(project.getProjectId());
     }
 
-    public PageList<Project> showAllProjects(PageRequestDto pageRequestDto) {
-        return projectRepository.findAll(pageRequestDto.page(),LIST_SIZE, pageRequestDto.sortBy());
+    public PageList<AllProjectsResponseDto> showAllProjects(PageRequestDto pageRequestDto) {
+       PageList<Project> projectPageList = projectRepository.findAll(pageRequestDto.page(),LIST_SIZE, pageRequestDto.sortBy());
+        List<AllProjectsResponseDto> allProjectsResponseDtos = new ArrayList<>();
+        for (Project project : projectPageList.content()) {
+            allProjectsResponseDtos.add(
+                    new AllProjectsResponseDto(
+                            project.getProjectId(),
+                            project.getTitle(),
+                            project.getShortDescription(),
+                            project.getRecruitSize(),
+                            project.getCurrentSize(),
+                            project.getStartDate(),
+                            project.getEndDate(),
+                            project.getCollaborateStyle(),
+                            project.getPreferredRegion(),
+                            project.getProjectLevel(),
+                            project.getProjectStatus(),
+                            project.getBackendMembers(),
+                            project.getCurrentBackend(),
+                            project.getFrontendMembers(),
+                            project.getCurrentFrontend(),
+                            project.getDesignMembers(),
+                            project.getCurrentDesign(),
+                            project.getPmMembers(),
+                            project.getCurrentPm()
+                    )
+            );
+        }
+       return new PageList<>(allProjectsResponseDtos, projectPageList.totalCount());
     }
 
-    public PageList<Project> searchProject(ProjectSearchRequestDto projectSearchConditionDto) {
-
-        return projectRepository.findByCondition(
+    public PageList<AllProjectsResponseDto> searchProject(ProjectSearchRequestDto projectSearchConditionDto) {
+        PageList<Project> projectPageList = projectRepository.findByCondition(
                 projectSearchConditionDto.getPage(),
                 LIST_SIZE,
                 "updatedAt",
                 projectSearchConditionDto.getRegions(),
-                projectSearchConditionDto.getPreferredAtmosphere(),
+                projectSearchConditionDto.getCollaborateStyle(),
                 projectSearchConditionDto.getSkillLevel(),
                 projectSearchConditionDto.getProjectStatus());
+        List<AllProjectsResponseDto> allProjectsResponseDtos = new ArrayList<>();
+        for (Project project : projectPageList.content()) {
+            allProjectsResponseDtos.add(
+                    new AllProjectsResponseDto(
+                            project.getProjectId(),
+                            project.getTitle(),
+                            project.getShortDescription(),
+                            project.getRecruitSize(),
+                            project.getCurrentSize(),
+                            project.getStartDate(),
+                            project.getEndDate(),
+                            project.getCollaborateStyle(),
+                            project.getPreferredRegion(),
+                            project.getProjectLevel(),
+                            project.getProjectStatus(),
+                            project.getBackendMembers(),
+                            project.getCurrentBackend(),
+                            project.getFrontendMembers(),
+                            project.getCurrentFrontend(),
+                            project.getDesignMembers(),
+                            project.getCurrentDesign(),
+                            project.getPmMembers(),
+                            project.getCurrentPm()
+                    )
+            );
+        }
+        return new PageList<>(allProjectsResponseDtos, projectPageList.totalCount());
+
     }
 
     public PageList<RecruitingProjectResponseDto> showRecruitingProjects() throws UserNotFound {
@@ -312,6 +366,7 @@ public class ProjectService {
         Project project = projectRepository.findById(projectId);
         project.completeProject();
         ChatChannel chatChannel = project.getChatChannel();
+        project.openChatChannel(null);
         // 챗 채널 페쇄
         chatChannelRepository.delete(chatChannel);
     }
@@ -328,6 +383,9 @@ public class ProjectService {
                 .name(project.getTitle())
                 .size(project.getCurrentSize())
                 .build();
+
+        chatChannelRepository.save(chatChannel);
+        project.openChatChannel(chatChannel);
 
         for (Membership membership : project.getMemberships()) {
             User chatUser = membership.getUser();

@@ -22,6 +22,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+
+
+        registry.addEndpoint("/ws-chat")               // ← 순수 WS
+                .setAllowedOriginPatterns("*");
         // stomp 접속 url
         registry.addEndpoint("/ws-chat")
                 .setAllowedOriginPatterns("*")
@@ -32,8 +36,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // 구독(메시지 수신) 경로 (prefix)
-        registry.enableSimpleBroker("/topic", "/queue")
-                .setHeartbeatValue(new long[]{10000, 10000}); // 서버 클라이언트 heartBeat 10s
+        registry.enableSimpleBroker("/topic", "/queue");
+//                .setTaskScheduler(new ThreadPoolTaskScheduler())
+//                .setHeartbeatValue(new long[]{10000, 10000}); // 서버 클라이언트 heartBeat 10s
 
         // 서버 수신(메시지 발행 송신) 경로(prefix)
         registry.setApplicationDestinationPrefixes("/app");

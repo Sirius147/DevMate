@@ -37,7 +37,7 @@ public class ChatMessage extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "chatMessage", fetch = FetchType.LAZY) @Builder.Default
+    @OneToMany(mappedBy = "chatMessage", fetch = FetchType.LAZY, orphanRemoval = true) @Builder.Default
     private List<ChatAttachment> chatAttachments = new ArrayList<>();
 
     @PrePersist

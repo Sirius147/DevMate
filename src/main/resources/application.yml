@@ -16,7 +16,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create   # 개발 단계는 update, 운영은 validate 권장
+      ddl-auto: update  # 개발 단계는 update, 운영은 validate 권장
     properties:
       hibernate:
         format_sql: true
@@ -57,6 +57,10 @@ logging:
     org.hibernate.orm.jdbc.bind: trace
     org.springframework.security: TRACE
     org.springframework.security.oauth2: TRACE
+    org.springframework.web.socket: DEBUG
+    org.springframework.web.socket.handler: TRACE
+    org.springframework.web.socket.sockjs: TRACE
+    org.springframework.messaging.simp.stomp: DEBUG
   # 비밀키는 엄격히 관리하자...
   ##
 

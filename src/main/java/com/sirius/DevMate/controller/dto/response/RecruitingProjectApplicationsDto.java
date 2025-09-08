@@ -5,6 +5,7 @@ import com.sirius.DevMate.domain.common.project.Position;
 import com.sirius.DevMate.domain.join.Application;
 
 public record RecruitingProjectApplicationsDto(
+        Long applicationId,
         String nickname,
         Position applyPosition,
         String content,

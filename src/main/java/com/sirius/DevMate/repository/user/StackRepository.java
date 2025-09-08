@@ -46,14 +46,21 @@ public class StackRepository {
     }
 
     public Optional<Stack> findSpecificStack(User user, StackType stackType) {
-        return Optional.ofNullable(em.createQuery("select s from Stack s where s.user = :user and " +
+        return em.createQuery("select s from Stack s where s.user = :user and " +
                 "s.stackType = :stackType", Stack.class)
-                .getSingleResult());
+                        .setParameter("user",user)
+                        .setParameter("stackType",stackType)
+                .setMaxResults(1)
+                .getResultList()
+                .stream()
+                .findFirst();
     }
 
     public void setSpecificStack(User user, StackType stackType, String stackName) {
         em.createQuery("select s from Stack s where s.user = :user and " +
                         "s.stackType = :stackType", Stack.class)
+                .setParameter("user",user)
+                .setParameter("stackType",stackType)
                 .getSingleResult()
                 .setStackName(stackName);
     }

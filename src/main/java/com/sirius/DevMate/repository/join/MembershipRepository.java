@@ -33,6 +33,7 @@ public class MembershipRepository {
         String jpql = "select count(m) from Membership m " +
                 "where m.user.userId = :userId and m.project.projectId = :projectId";
         return (em.createQuery(jpql, Long.class)
+                .setParameter("userId",userId)
                 .setParameter("projectId",projectId)
                 .getSingleResult() > 0);
     }

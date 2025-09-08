@@ -1,8 +1,8 @@
 package com.sirius.DevMate.repository.project;
 
 import com.sirius.DevMate.controller.dto.response.PageList;
+import com.sirius.DevMate.domain.common.project.CollaborateStyle;
 import com.sirius.DevMate.domain.common.project.ProjectStatus;
-import com.sirius.DevMate.domain.common.user.PreferredAtmosphere;
 import com.sirius.DevMate.domain.common.user.Regions;
 import com.sirius.DevMate.domain.common.user.SkillLevel;
 import com.sirius.DevMate.domain.join.Review;
@@ -47,7 +47,7 @@ public class ProjectRepository {
     }
 
     public PageList<Project> findAll(Integer page, Integer size, String sortBy) {
-        String jpql = "select p from Project p order by p." +  sortBy + " acs";
+        String jpql = "select p from Project p order by p." +  sortBy + " ASC";
 
         List<Project> rows = em.createQuery(jpql, Project.class)
                 .setFirstResult(page*size) //OFFSET
@@ -61,7 +61,7 @@ public class ProjectRepository {
     }
 
     public PageList<Project> findByCondition(Integer page, Integer size, String sortBy,
-                                             Regions regions, PreferredAtmosphere preferredAtmosphere,
+                                             Regions regions, CollaborateStyle collaborateStyle,
                                              SkillLevel skillLevel, ProjectStatus projectStatus) {
 
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -71,10 +71,10 @@ public class ProjectRepository {
         List<Predicate> predicates = new ArrayList<>();
 
         if (regions != null) {
-            predicates.add(criteriaBuilder.equal(root.get("regions"), regions));
+            predicates.add(criteriaBuilder.equal(root.get("preferredRegion"), regions));
         }
-        if (preferredAtmosphere != null) {
-            predicates.add(criteriaBuilder.equal(root.get("preferredAtmosphere"), preferredAtmosphere));
+        if (collaborateStyle != null) {
+            predicates.add(criteriaBuilder.equal(root.get("collaborateStyle"), collaborateStyle));
         }
         if (skillLevel != null) {
             predicates.add(criteriaBuilder.equal(root.get("skillLevel"), skillLevel));
@@ -93,28 +93,29 @@ public class ProjectRepository {
                 .setMaxResults(size)
                 .getResultList();
 
-        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Project> countRoot = query.from(Project.class);
-        countQuery.select(criteriaBuilder.count(countRoot));
-
-        List<Predicate> countPredicates = new ArrayList<>();
-
-        if (regions != null) {
-            countPredicates.add(criteriaBuilder.equal(countRoot.get("regions"), regions));
-        }
-        if (preferredAtmosphere != null) {
-            countPredicates.add(criteriaBuilder.equal(countRoot.get("preferredAtmosphere"), preferredAtmosphere));
-        }
-        if (skillLevel != null) {
-            countPredicates.add(criteriaBuilder.equal(countRoot.get("skillLevel"), skillLevel));
-        }
-        if (projectStatus != null) {
-            countPredicates.add(criteriaBuilder.equal(countRoot.get("projectStatus"), projectStatus));
-        }
-
-        countQuery.where(countPredicates.toArray(new Predicate[0]));
-        Long totalCount = em.createQuery(countQuery)
-                .getSingleResult();
+        Long totalCount = (long) projects.size();
+//        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+//        Root<Project> countRoot = query.from(Project.class);
+//        countQuery.select(criteriaBuilder.count(countRoot));
+//
+//        List<Predicate> countPredicates = new ArrayList<>();
+//
+//        if (regions != null) {
+//            countPredicates.add(criteriaBuilder.equal(countRoot.get("preferredRegion"), regions));
+//        }
+//        if (preferredAtmosphere != null) {
+//            countPredicates.add(criteriaBuilder.equal(countRoot.get("collaborateStyle"), preferredAtmosphere));
+//        }
+//        if (skillLevel != null) {
+//            countPredicates.add(criteriaBuilder.equal(countRoot.get("skillLevel"), skillLevel));
+//        }
+//        if (projectStatus != null) {
+//            countPredicates.add(criteriaBuilder.equal(countRoot.get("projectStatus"), projectStatus));
+//        }
+//
+//        countQuery.where(countPredicates.toArray(new Predicate[0]));
+//        Long totalCount = em.createQuery(countQuery)
+//                .getSingleResult();
 
         return new PageList<>(projects, totalCount);
     }

@@ -121,6 +121,13 @@ public class UserService {
 
     public MyPageDto getMyPage() throws UserNotFound {
         User loginUser = getUser();
+
+        List<StackResponseDto> stackResponseDtos = new ArrayList<>();
+
+        for (Stack stack : loginUser.getStacks()) {
+            stackResponseDtos.add(new StackResponseDto(stack.getStackType(), stack.getStackName()));
+        }
+
         return new  MyPageDto(loginUser.getName(),
                 loginUser.getEmail(),
                 loginUser.getNickname(),
@@ -131,7 +138,7 @@ public class UserService {
                 loginUser.getPreferredAtmosphere(),
                 loginUser.getPreferredCollaborateStyle(),
                 loginUser.getPosition(),
-                loginUser.getStacks());
+                 stackResponseDtos);
     }
 
     public void setProfile(UpdateProfileDto updateProfileDto) throws UserNotFound {
@@ -165,7 +172,7 @@ public class UserService {
                         stackRepository.setSpecificStack(user, StackType.DB, stackSetUpDto.getStackName());
                     } else {
                         Stack newStack = Stack.builder()
-                                .stackType(StackType.LANGUAGE)
+                                .stackType(StackType.DB)
                                 .stackName(stackSetUpDto.getStackName())
                                 .user(user)
                                 .build();

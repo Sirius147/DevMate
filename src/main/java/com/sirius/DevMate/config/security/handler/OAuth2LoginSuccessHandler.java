@@ -30,6 +30,8 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     private final UserRepository userRepository;
     private final JwtTokenService jwtTokenService;
     @Value("${app.frontend.success-redirect}") private String frontendRedirect;
+    @Value("${jwt.access-exp-seconds}") private Long accessExpSeconds;
+    @Value("${jwt.refresh-exp-seconds}") private Long refreshExpSeconds;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -84,6 +86,15 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
         refreshTokenCookie.setMaxAge(60*60*24*14);
         response.addCookie(refreshTokenCookie);
+
+        Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
+        acessTokenCookie.setHttpOnly(true);
+        acessTokenCookie.setPath("/");
+        acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
+        response.addCookie(acessTokenCookie);
+
+
+
 //        refresh.setSecure(true);    // https 에서만 전송
 //        refresh.setAttribute("SameSite", "Strict"); 다른 도메인에서 접근 가능
 
@@ -96,11 +107,11 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 //        getRedirectStrategy().sendRedirect(request,response,url);
 */
         // access token을 response body 에 json으로 전달
-        Map<String, String> accessTokenJson = Map.of(
-                "token_type", "bearer_token",
-                "access_token", tokenPair.access()
-        );
-        new ObjectMapper().writeValue(response.getWriter(), accessTokenJson);
+//        Map<String, String> accessTokenJson = Map.of(
+//                "token_type", "bearer_token",
+//                "access_token", tokenPair.access()
+//        );
+//        new ObjectMapper().writeValue(response.getWriter(), accessTokenJson);
 
         getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
 
