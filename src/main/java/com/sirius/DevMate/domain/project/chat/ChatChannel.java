@@ -19,7 +19,7 @@ public class ChatChannel extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long channelId;
+    private Long chatChannelId;
 
     @OneToOne
     @JoinColumn(name = "project_id")

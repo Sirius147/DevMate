@@ -28,11 +28,11 @@ public class ChatMembership {
     private ChatChannel chatChannel;
 
     @Column(nullable = false)
-    private Instant lastReadAt; // Long lastReadChatMessageId
+    private Long lastReadMessageId; // Long lastReadChatMessageId
 
     @PrePersist
     public void prePersist() {
-        this.lastReadAt = Instant.EPOCH; // 기본값 1970년
+        this.lastReadMessageId = 0L;
     }
 
 

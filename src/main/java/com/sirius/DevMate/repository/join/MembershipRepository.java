@@ -25,6 +25,7 @@ public class MembershipRepository {
     public List<Membership> findByProjectId(Long projectId) {
         String jpql = "select m from Membership m where m.project.projectId = :projectId";
         return em.createQuery(jpql, Membership.class)
+                .setParameter("projectId",projectId)
                 .getResultList();
     }
 
@@ -32,12 +33,14 @@ public class MembershipRepository {
         String jpql = "select count(m) from Membership m " +
                 "where m.user.userId = :userId and m.project.projectId = :projectId";
         return (em.createQuery(jpql, Long.class)
+                .setParameter("projectId",projectId)
                 .getSingleResult() > 0);
     }
 
     public Membership findByUserId(Long userId, Long projectId) {
         String jpql = "select m from Membership m where m.user.userId = :userId and m.project.projectId = :projectId";
         return em.createQuery(jpql, Membership.class)
+                .setParameter("projectId", projectId)
                 .getSingleResult();
     }
 }

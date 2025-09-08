@@ -9,6 +9,7 @@ import com.sirius.DevMate.domain.join.Review;
 import com.sirius.DevMate.domain.project.Doc;
 import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.project.TodoList;
+import com.sirius.DevMate.domain.project.chat.ChatChannel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
@@ -150,5 +151,17 @@ public class ProjectRepository {
         } else {
             em.merge(newReview);
         }
+    }
+
+    public ChatChannel findChatChannelByProjectId(Long projectId) {
+        String jpql = "select c from ChatChannel c where c.project.projectId = :projectId";
+        return em.createQuery(jpql, ChatChannel.class)
+                .setParameter("projectId", projectId)
+                .getResultList()
+                .getFirst();
+    }
+
+    public ChatChannel findChatChannelByChatChannelId(Long chatChannelId) {
+        return em.find(ChatChannel.class, chatChannelId);
     }
 }

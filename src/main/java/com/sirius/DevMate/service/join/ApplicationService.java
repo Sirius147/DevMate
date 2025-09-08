@@ -4,7 +4,10 @@ package com.sirius.DevMate.service.join;
 import com.sirius.DevMate.controller.dto.response.ApplicationResponseDto;
 import com.sirius.DevMate.controller.dto.response.PageList;
 import com.sirius.DevMate.controller.dto.response.RecruitingProjectApplicationsDto;
-import com.sirius.DevMate.domain.common.project.*;
+import com.sirius.DevMate.domain.common.project.ApplicationStatus;
+import com.sirius.DevMate.domain.common.project.MembershipRole;
+import com.sirius.DevMate.domain.common.project.MembershipStatus;
+import com.sirius.DevMate.domain.common.project.Position;
 import com.sirius.DevMate.domain.join.Application;
 import com.sirius.DevMate.domain.join.Membership;
 import com.sirius.DevMate.domain.project.Project;
@@ -18,13 +21,11 @@ import com.sirius.DevMate.service.project.ProjectService;
 import com.sirius.DevMate.service.user.NotificationService;
 import com.sirius.DevMate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

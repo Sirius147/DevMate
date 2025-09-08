@@ -30,6 +30,7 @@ public class ApplicationRepository {
     public List<Application> findByUserId(Long userId) {
         String jpql = "select a from Application a where a.user.userId = :userId";
         List<Application> applications = em.createQuery(jpql, Application.class)
+                .setParameter("userId", userId)
                 .getResultList();
         return applications;
     }

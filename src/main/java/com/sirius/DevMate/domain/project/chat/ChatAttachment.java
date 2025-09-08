@@ -15,23 +15,28 @@ public class ChatAttachment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long chatAttachmentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_message_id")
-    private ChatMessage chatMessage;
+
+    @Column(length = 300)
+    private String storageKey;
 
     @Column(length = 300)
     private String url;
 
     private String mimeType;
 
-    @Column(length = 300)
-    private String storageKey;
 
     @Column(length = 300)
     private String filename;
 
-//    @Min(0)
+    //    @Min(0)
 //    @Max(10485760) // 최대 10MB
     @Column(columnDefinition = "BIGINT CHECK (file_size <= 10485760)")
     private Long fileSize;
+
+    @Column(length = 100)
+    private String contentType;  // e.g. image/png, application/pdf
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_message_id")
+    private ChatMessage chatMessage;
 }

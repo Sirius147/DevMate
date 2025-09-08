@@ -8,9 +8,13 @@ import com.sirius.DevMate.domain.join.Review;
 import com.sirius.DevMate.domain.project.Doc;
 import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.project.TodoList;
+import com.sirius.DevMate.domain.project.chat.ChatChannel;
+import com.sirius.DevMate.domain.project.chat.ChatMembership;
 import com.sirius.DevMate.domain.user.User;
 import com.sirius.DevMate.exception.ProjectException;
 import com.sirius.DevMate.exception.UserNotFound;
+import com.sirius.DevMate.repository.project.chat.ChatChannelRepository;
+import com.sirius.DevMate.repository.project.chat.ChatMembershipRepository;
 import com.sirius.DevMate.repository.user.NotificationRepository;
 import com.sirius.DevMate.repository.join.ApplicationRepository;
 import com.sirius.DevMate.repository.join.MembershipRepository;
@@ -35,6 +39,8 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final MembershipRepository membershipRepository;
+    private final ChatChannelRepository chatChannelRepository;
+    private final ChatMembershipRepository chatMembershipRepository;
     private final ApplicationRepository applicationRepository;
     private final NotificationRepository notificationRepository;
     private final UserService userService;
@@ -303,14 +309,37 @@ public class ProjectService {
     public void completeProject(Long projectId) {
         Project project = projectRepository.findById(projectId);
         project.completeProject();
-
+        ChatChannel chatChannel = project.getChatChannel();
         // 챗 채널 페쇄
+        chatChannelRepository.delete(chatChannel);
     }
 
     public void endRecruitingStartProject(Long projectId) {
         // 팀 챗 개설, project Status 변경
         Project project = projectRepository.findById(projectId);
         project.changeProjectStatus(ProjectStatus.IN_PROGRESS);
+        membershipService.updateProjectMembershipStatus(projectId);
+
+
+        ChatChannel chatChannel = ChatChannel.builder()
+                .project(project)
+                .name(project.getTitle())
+                .size(project.getCurrentSize())
+                .build();
+
+        for (Membership membership : project.getMemberships()) {
+            User chatUser = membership.getUser();
+            ChatMembership newChatMembership = ChatMembership.builder()
+                    .user(chatUser)
+                    .chatChannel(chatChannel)
+                    .build();
+
+            chatMembershipRepository.save(newChatMembership);
+            chatChannel.getChatMemberships().add(newChatMembership);
+
+        }
+
+
 
     }
 
