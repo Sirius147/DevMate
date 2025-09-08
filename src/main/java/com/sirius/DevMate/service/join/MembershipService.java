@@ -6,8 +6,6 @@ import com.sirius.DevMate.domain.join.Membership;
 import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.user.User;
 import com.sirius.DevMate.repository.join.MembershipRepository;
-import com.sirius.DevMate.service.project.ProjectService;
-import com.sirius.DevMate.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +19,6 @@ import java.util.List;
 public class MembershipService {
 
     private final MembershipRepository membershipRepository;
-    private final UserService userService;
-    private final ProjectService projectService;
 
     public Membership createMembership(
             User user,
@@ -58,8 +54,8 @@ public class MembershipService {
         return membershipRepository.findByUserId(userId, projectId);
     }
 
-    public void updateProjectMembershipStatus(Long projectId) {
-        Project project = projectService.getProjectById(projectId);
+    public void updateProjectMembershipStatus(Project project) {
+
         List<Membership> memberships = project.getMemberships();
         for (Membership membership : memberships) {
             membership.changeMembershipStatus(MembershipStatus.PARTICIPATION);

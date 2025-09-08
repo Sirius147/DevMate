@@ -39,7 +39,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final StackRepository stackRepository;
-    private final NotificationService notificationService;
 
     // 로그인한 유저 불러오기
     public User getUser() throws UserNotFound {

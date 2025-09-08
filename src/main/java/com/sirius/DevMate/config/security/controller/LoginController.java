@@ -49,7 +49,7 @@ public class LoginController {
 //        return "login/Basic";
             return "login";
         } else {
-            log.info("principal로부터 등록 실패");
+            log.info("==========fail from registering principal -> LoginController loginBasic");
             model.addAttribute("authenticated", false);
 //        return "login/Basic";
             return "login";

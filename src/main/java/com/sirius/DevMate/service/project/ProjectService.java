@@ -37,15 +37,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProjectService {
 
+    private final UserService userService;
+    private final MembershipService membershipService;
+
     private final ProjectRepository projectRepository;
     private final MembershipRepository membershipRepository;
     private final ChatChannelRepository chatChannelRepository;
     private final ChatMembershipRepository chatMembershipRepository;
-    private final ApplicationRepository applicationRepository;
-    private final NotificationRepository notificationRepository;
-    private final UserService userService;
-    private final NotificationService notificationService;
-    private final MembershipService membershipService;
     private static final Integer LIST_SIZE = 10;
 
     public void newProject(NewProjectDto newProjectDto) throws UserNotFound, ProjectException {
@@ -92,12 +90,16 @@ public class ProjectService {
                 .currentPm(newProjectDto.currentPm())
                 .build();
 
-        Membership newMembership = membershipService.createMembership(
-                userService.getUser(),
-                newProject,
-                MembershipRole.LEADER,
-                MembershipStatus.PARTICIPATION
-                );
+        Membership newMembership = Membership
+                .builder()
+                .user(userService.getUser())
+                .project(newProject)
+                .membershipRole(MembershipRole.LEADER)
+                .membershipStatus(MembershipStatus.PARTICIPATION)
+                .build();
+        membershipRepository.save(newMembership);
+        newProject.getMemberships().add(newMembership);
+        userService.getUser().getMyMemberships().add(newMembership);
 
         projectRepository.save(newProject);
 
@@ -318,7 +320,7 @@ public class ProjectService {
         // 팀 챗 개설, project Status 변경
         Project project = projectRepository.findById(projectId);
         project.changeProjectStatus(ProjectStatus.IN_PROGRESS);
-        membershipService.updateProjectMembershipStatus(projectId);
+        membershipService.updateProjectMembershipStatus(project);
 
 
         ChatChannel chatChannel = ChatChannel.builder()

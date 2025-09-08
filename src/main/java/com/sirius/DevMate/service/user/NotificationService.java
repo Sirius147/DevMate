@@ -9,9 +9,7 @@ import com.sirius.DevMate.domain.project.Project;
 import com.sirius.DevMate.domain.user.Notification;
 import com.sirius.DevMate.domain.user.User;
 import com.sirius.DevMate.exception.ProjectException;
-import com.sirius.DevMate.exception.UserNotFound;
 import com.sirius.DevMate.repository.user.NotificationRepository;
-import com.sirius.DevMate.service.join.MembershipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,6 @@ import java.util.List;
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
-    private final UserService userService;
 
     private Notification createNotification(
             User user,
@@ -43,11 +40,11 @@ public class NotificationService {
         return notification;
     }
 
-    public void expireNotification(Notification notification) throws UserNotFound {
-        User user = userService.getUser();
-        user.getNotifications().remove(notification);
-        notificationRepository.delete(notification);
-    }
+//    public void expireNotification(Notification notification) throws UserNotFound {
+//        User user = userService.getUser();
+//        user.getNotifications().remove(notification);
+//        notificationRepository.delete(notification);
+//    }
 
     public void notifyApplicationSubmittedNotifications(User loginUser, Project project, Application application) throws ProjectException {
 
