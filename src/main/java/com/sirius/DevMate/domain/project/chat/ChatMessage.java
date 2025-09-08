@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "chat_message", uniqueConstraints = @UniqueConstraint(name = "uk_chat_message", columnNames =
-        {"chat_membership", "created_at"}))
+        {"chat_membership_id", "created_at"}))
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ChatMessage extends BaseTimeEntity {
     @Id
