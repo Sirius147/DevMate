@@ -39,7 +39,7 @@ public class ProjectService {
 
     private final UserService userService;
     private final MembershipService membershipService;
-
+    private final NotificationService notificationService;
     private final ProjectRepository projectRepository;
     private final MembershipRepository membershipRepository;
     private final ChatChannelRepository chatChannelRepository;
@@ -399,6 +399,7 @@ public class ProjectService {
 
         }
 
+        notificationService.notifyProjectStartNotification(project.getMemberships());
 
 
     }
