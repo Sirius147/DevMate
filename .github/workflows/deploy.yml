@@ -2,7 +2,7 @@ name: CI/CD Deploy
 
 on:
   push:
-    branches: [ "main" ]   # main 브랜치 푸시 시 배포 # CHECK#chaeck
+    branches: [ "main" ]   # main 브랜치 푸시 시 배포 # CHECK#chaeck ##
 
 jobs:
   build-and-push:
