@@ -47,7 +47,7 @@ public class SecurityConfig {
                                 , "/auth/**"
                                 ,"/.well-known/**"
                                 , "/ws-chat/**"     // stomp
-                                , "/actuator/health", "actuator/info"
+                                , "/actuator/health", "/actuator/info"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
