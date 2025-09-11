@@ -1,0 +1,119 @@
+spring:
+  config:
+    activate:
+      on-profile: prod # 실행시 항상 확인 !!
+  # MySQL
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # Redis Host & Port for JWT
+  redis:
+    host: localhost
+    port: 6379
+  # Jpa (hibernate)
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update  # 개발 단계는 update, 운영은 validate 권장
+    properties:
+      hibernate:
+        format_sql: true
+        #        show_sql: true # 콘솔에 프린트
+        jdbc.time_zone: UTC
+  # schema sql 자동 실행 제어
+  sql:
+    init:
+      mode: never               # schema.sql/data.sql 자동실행 제어 (always/embedded/never)
+  # OAuth2 Key & Secret
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            scope: openid, email, profile
+          github:
+            client-id: ${GITHUB_CLIENT_ID:}
+            client-secret: ${GITHUB_CLIENT_SECRET:}
+            scope: user:email
+  jackson:
+    time-zone: UTC
+# server session timeout
+server:
+  servlet:
+    session:
+      timeout: 30
+
+# log
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    org.springframework.security: TRACE
+    org.springframework.security.oauth2: TRACE
+    org.springframework.web.socket: DEBUG
+    org.springframework.web.socket.handler: TRACE
+    org.springframework.web.socket.sockjs: TRACE
+    org.springframework.messaging.simp.stomp: DEBUG
+  # 비밀키는 엄격히 관리하자...
+  ##
+
+# JWT secret & token exp
+jwt:
+  issuer: devmate
+  secret: ${JWT_SECRET}
+  access-exp-seconds: 900
+  refresh-exp-seconds: 1209600
+
+app:
+  frontend:
+    success-redirect: "http://localhost:5173/login/success"  # 프론트의 성공 리다이렉트 주소
+#
+#    성공 핸들러가 JWT(access) 발급
+#
+#    redirect(예: https://app.example.com/login/success)에 ?token=<ACCESS>를 붙여 URL 생성
+#   refresh는 https + 쿠키에 저장
+#
+#    res.sendRedirect(url) → 브라우저가 그 URL로 이동
+#
+#    프론트는 도착 페이지에서 token 값을 읽어 메모리에 저장 후, URL에서 토큰을 지움
+#
+#    이후 API 호출 시 Authorization: Bearer <token> 헤더로 사용
+#
+
+
+#  만료되면 무엇을 하나?
+#
+#  Access 만료(짧음: 5~15분)
+#
+#  API가 401을 주면 프론트가 자동으로 /auth/refresh 호출(쿠키 전송됨).
+#
+#  백엔드는 refresh 검증(타입=refresh, 유효/미폐기) 후 새 access + ( refresh 만료 시) 새 refresh를 발급.
+#
+#  프론트는 새 access를 메모리에 교체하고, 실패했던 요청을 재시도.
+#
+#  Refresh 만료(길음: 며칠~몇 주)
+#
+#  /auth/refresh도 401/403 → 로그인 페이지로 재진입(/oauth2/authorization/{provider}).
+#
+# 회전/안전성(권장): refresh는 DB 화이트리스트(+jti)로 1회용 회전하고, 로그아웃 시 폐기. 탈취 대응력이 크게 올라가.
+
+cloud:
+  aws:
+    s3:
+      bucket: devmate-sirius-project
+      region: us-east-2
+    credentials:
+      access-key: ${CREDENTIALS_ACCESS_KEY}
+      secret-key: ${CREDENTIALS_SECRET_KEY}
+
+chat:
+  upload:
+    max-size-bytes: 10485760
+    allowed-mime: image/png,image/jpeg,application/pdf
