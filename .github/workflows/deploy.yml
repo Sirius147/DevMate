@@ -30,8 +30,15 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build & Push Docker image
+        env:
+          OWNER: ${{ github.repository_owner }}
+          IMAGE_NAME: devmate
         run: |
-          IMAGE=ghcr.io/${{ github.repository_owner }}/devmate:latest
+          OWNER_LC=$(echo "$OWNER" | tr '[:upper:]' '[:lower:]')
+          IMAGE=ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
+          echo "Using image: $IMAGE"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "$OWNER_LC" --password-stdin
+    
           docker build -t $IMAGE .
           docker push $IMAGE
 
