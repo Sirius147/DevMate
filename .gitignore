@@ -33,6 +33,11 @@ out/
 /nbdist/
 /.nb-gradle/
 
+
+# 환경 변수 파일
+.env
+*.env
+
 ### VS Code ###
 .vscode/
 
