@@ -26,21 +26,22 @@ jobs:
       - name: Build JAR
         run: ./gradlew clean build -x test
 
-      - name: Log in to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # === GHCR 로그인: PAT 사용 ===
+      - name: Login to GHCR (PAT)
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.repository_owner }}" --password-stdin
 
+      # === 이미지 태그는 반드시 소문자 ===
       - name: Build & Push Docker image
         env:
           OWNER: ${{ github.repository_owner }}
           IMAGE_NAME: devmate
         run: |
           OWNER_LC=$(echo "$OWNER" | tr '[:upper:]' '[:lower:]')
-          IMAGE=ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest
+          IMAGE="ghcr.io/${OWNER_LC}/${IMAGE_NAME}:latest"
           echo "Using image: $IMAGE"
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "$OWNER_LC" --password-stdin
-    
-          docker build -t $IMAGE .
-          docker push $IMAGE
+
+          docker build -t "$IMAGE" .
+          docker push "$IMAGE"
 
   deploy:
     needs: build-and-push
