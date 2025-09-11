@@ -110,8 +110,8 @@ cloud:
       bucket: devmate-sirius-project
       region: us-east-2
     credentials:
-      access-key: ${AWS-ACCESS-KEY}
-      secret-key: ${AWS-SECRET-KEY}
+      access-key: ${CREDENTIALS_ACCESS_KEY}
+      secret-key: ${CREDENTIALS_SECRET_KEY}
 
 chat:
   upload:
