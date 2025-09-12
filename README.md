@@ -91,6 +91,9 @@
 ---
 ### 🤝 기술 스택
 
+<BR/><BR/><BR/>
+<BR/>
+
 **LANGUAGE & FRAMEWORK** </BR>
 ![java](https://github.com/user-attachments/assets/a9cd03e7-07d6-477e-b3dd-32e7a6ae1e08)
 ![jpa](https://github.com/user-attachments/assets/dd9fdaec-6850-4401-9c67-af2da34ddf5d) 
@@ -132,6 +135,8 @@
 
 
 
+<BR/><BR/><BR/>
+<BR/>
 
 
 
@@ -143,6 +148,8 @@
 
 ### 👀 IA (Information Architecture)
 
+<BR/><BR/><BR/>
+<BR/>
 https://gitmind.com/app/docs/fjm0xdsb
 
 <img width="794" height="880" alt="제목없음" src="https://github.com/user-attachments/assets/c76a6105-f303-4ab5-a5a1-3b7ceb92ed44" />
@@ -153,7 +160,12 @@ https://gitmind.com/app/docs/fjm0xdsb
 
 ---
 
+<BR/><BR/><BR/>
+<BR/>
 ### 👀 ERD (Entity Relation Diagram)
+
+<BR/><BR/><BR/>
+<BR/>
 <img width="1342" height="834" alt="image" src="https://github.com/user-attachments/assets/bbd31ed5-0536-48cf-a447-5708cd027550" />
 
 
