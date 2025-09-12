@@ -1,32 +1,31 @@
 #  DevMate
-<BR/><BR/><BR/>
+<BR/><BR/>
 
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/3ae93a90-7015-403d-ac21-46397fd92902" />
-<BR/><BR/>
+<BR/>
 
 |<img src="https://avatars.githubusercontent.com/iamyeongg" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="100" height="100"/>|  <BR/>
   |[@iamyeongg](https://github.com/iamyeongg)      |[@Sirius147](https://github.com/Sirius147)|
 
-<BR/><BR/><BR/>
-<BR/>
+<BR/><BR/>
 
 ---
 
-<BR/><BR/><BR/>
 <BR/>
 **💪 프로젝트 개요**
 
 - **실력을 높이고** 싶고,  **비전이 같은 파트너**를 만나고 싶거나, **추구하는 개발 환경이 비슷한 동료**를 구하는 **개발자/ 예비 개발자/ 취준생 들이 프로젝트를 인원을 모집하거나 지원하며 진행하는 프로젝트를 효율적 관리를 도우는**  플랫폼
 
+<BR/>
   
 ---
 
-<BR/><BR/><BR/>
 <BR/>
+
 ### 📊 핵심 기능
 ---
-<BR/><BR/><BR/>
 <BR/>
+
 ### 1. 로그인/ 마이페이지
 
 - **OAuth2 기반 Github / Google 소셜 로그인**
@@ -37,10 +36,13 @@
 - 닉네임, 지역, 기술 스택, 개발 실력(전문/중급/초급/입문), 개인 평판,  원**하는 그룹 성향을 통한 유저 관리, 수정 기능**
     
     
+<BR/><BR/>
 
 ### 2. 프로젝트 찾기
 
 - **지역, 실력, 선호 개발 환경 등 다양한 검색 조건 기반으로 프로젝트 맵핑**
+
+  <BR/><BR/>
 
 ### 3. 새 프로젝트
 
@@ -48,6 +50,8 @@
     - **시작일, 종료일**
     - **목표 환경**
     - **원하는 파트너 및 원하는 인원 설정**
+ 
+      <BR/><BR/>
 
 ### 4. 나의 프로젝트
 
@@ -71,12 +75,16 @@
 - 지원한 프로젝트
     - 지원한 프로젝트 상태 확인
     - 수락, 거부, 대기 등
+ 
+      <BR/><BR/>
 
 ### 5. 프로젝트 지원
 
 - 메인 페이지에서 프로젝트 목록 제공 (시간 순)
     - **원하는 프로젝트** 조건에 있는 프로젝트 **실 지원** 기능
     - **프로젝트 리더에게 알림 전송** 및 수락/거부 액션 가능
+ 
+      <BR/><BR/>
 
 ### 6. 알림
 
@@ -84,18 +92,20 @@
     - **알림 이벤트 발생 시 서비스 메인 페이지에서 알림 여부를 유저에게 UI로 알림**
     - 유저가 알림 확인 시 해당 알림 읽음 처리
 
+	<BR/><BR/>
+
 ### 7. EC2 인스턴스 기반 서버 + GITHUB ACTIONS 자동화
 
 - CI/CD를 통해 서비스 상시 제공 및 정상화
 
-<BR/><BR/><BR/>
-<BR/>
+<BR/><BR/>
 
 ---
+<BR/>
+
 ### 🤝 기술 스택
 
-<BR/><BR/><BR/>
-<BR/>
+<BR/><BR/>
 
 **LANGUAGE & FRAMEWORK** </BR>
 ![java](https://github.com/user-attachments/assets/a9cd03e7-07d6-477e-b3dd-32e7a6ae1e08)
@@ -138,20 +148,14 @@
 
 
 
-<BR/><BR/><BR/>
-<BR/>
-
-
-
-
-
-
+<BR/><BR/>
 
 ---
+<BR/>
 
 ### 👀 IA (Information Architecture) & Wire Frame
 
-<BR/><BR/><BR/>
+<BR/>
 
 
 
@@ -170,20 +174,15 @@
 
  
   <br>
- 
 
-
-
-
-<BR/><BR/>
-
+<BR/>
 
 
 
 
 ---
 
-<BR/><BR/>
+<BR/>
 ### 🧒 API
 [API명세서 링크](https://www.notion.so/API-256c1d551b838048ac6cd561b7c18b1e) <br>
 
