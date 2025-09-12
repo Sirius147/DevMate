@@ -183,7 +183,9 @@
 ---
 
 <BR/>
+
 ### 🧒 API
+
 [API명세서 링크](https://www.notion.so/API-256c1d551b838048ac6cd561b7c18b1e) <br>
 
 <details>
