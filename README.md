@@ -155,15 +155,14 @@
 
 
 
-	
-	[깃마인드](https://gitmind.com/app/docs/fjm0xdsb)
+[깃마인드](https://gitmind.com/app/docs/fjm0xdsb)
  <br>
  
-	<img width="794" height="880" alt="제목없음" src="https://github.com/user-attachments/assets/c76a6105-f303-4ab5-a5a1-3b7ceb92ed44"/> 
+<img width="794" height="880" alt="제목없음" src="https://github.com/user-attachments/assets/c76a6105-f303-4ab5-a5a1-3b7ceb92ed44"/> 
  
  <br>
 
-	[피그마](https://www.figma.com/proto/HyJTKOmrgnTOPXabQGGvZf/DevMate-WF?node-id=0-1&t=Cn70nTap1sznKDgZ-1)
+[피그마](https://www.figma.com/proto/HyJTKOmrgnTOPXabQGGvZf/DevMate-WF?node-id=0-1&t=Cn70nTap1sznKDgZ-1)
  
   <br>
  
