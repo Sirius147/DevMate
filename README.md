@@ -175,7 +175,7 @@ https://gitmind.com/app/docs/fjm0xdsb
 
 
 <details>
-  <summary>**테이블 명세서**</summary>
+  <summary> **테이블 명세서** </summary>
     application <br/>
 <img width="505" height="199" alt="image" src="https://github.com/user-attachments/assets/e91f2fbe-9cfe-4bd6-96ab-ba669f1bec64" /> </br>
 chat_attachment <br/>
