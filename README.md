@@ -36,6 +36,13 @@
 - 필터: 기술스택, 지역, 개발 실력, 기간, 원하는 그룹 성향
 
 
+### 🤝 기술 스택
+
+![java](https://github.com/user-attachments/assets/a9cd03e7-07d6-477e-b3dd-32e7a6ae1e08)
+![jpa](https://github.com/user-attachments/assets/dd9fdaec-6850-4401-9c67-af2da34ddf5d) 
+![gradle](https://github.com/user-attachments/assets/3e2aecfc-6ca4-4c16-b05a-857ea967c265)
+![jwt](https://github.com/user-attachments/assets/83bddf8b-d556-4e60-8391-2074704103c4)
+![amazon](https://github.com/user-attachments/assets/0713b793-2d1e-40df-b31a-0005c2d18625)
 
 
 ---
