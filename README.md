@@ -4,8 +4,8 @@
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/3ae93a90-7015-403d-ac21-46397fd92902" />
 <BR/><BR/>
 
-|<img src="https://avatars.githubusercontent.com/iamyeongg" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="100" height="100"/>|<BR/>
-|[@iamyeongg](https://github.com/iamyeongg)    |[@Sirius147](https://github.com/Sirius147)|
+|<img src="https://avatars.githubusercontent.com/iamyeongg" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="100" height="100"/>|  <BR/>
+  |[@iamyeongg](https://github.com/iamyeongg)      |[@Sirius147](https://github.com/Sirius147)|
 
 <BR/><BR/><BR/>
 <BR/>
