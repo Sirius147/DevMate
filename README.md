@@ -188,7 +188,10 @@
 
 ### 🧒 API
 
-[API명세서 링크](https://www.notion.so/API-256c1d551b838048ac6cd561b7c18b1e) <br>
+[API 명세서1](https://www.notion.so/API-256c1d551b838048ac6cd561b7c18b1e) <br>
+
+[API 명세서2](https://www.notion.so/269c1d551b8380ed897cd7c7f05fd116?source=copy_link)
+</br>
 
 <details>
 	<summary>요청 예시</summary>
