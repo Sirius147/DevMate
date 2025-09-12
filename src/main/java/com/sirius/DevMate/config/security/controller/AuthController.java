@@ -93,7 +93,7 @@ public class AuthController {
         /* refresh가 만료 됐을 경우*/
         else {
             return ResponseEntity.status(302)
-                    .header("Location", "/auth/logout")
+//                    .header("Location", "/auth/logout")
                     .build();
         }
 
@@ -113,7 +113,7 @@ public class AuthController {
 
         // 프론트는 access 메모리 삭제
         return ResponseEntity.status(302)
-                .header("Location","/")
+//                .header("Location","/")
                 .build();
     }
 }
