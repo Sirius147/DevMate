@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private static final String FRONT_ADDRESS = "http://localhost:5173";
+    private static final String FRONT_ADDRESS = "http://localhost";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

@@ -92,9 +92,13 @@ public class AuthController {
         }
         /* refresh가 만료 됐을 경우*/
         else {
-            return ResponseEntity.status(302)
-//                    .header("Location", "/auth/logout")
-                    .build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of(
+                            "status", HttpStatus.UNAUTHORIZED.value(),
+                            "error", "UNAUTHORIZED",
+                            "message", "리프리시 토큰이 만료되었습니다. 로그아웃 후 다시 로그인해 주세요.",
+                            "logout", true
+                    ));
         }
 
     }
