@@ -153,8 +153,8 @@
 
 <BR/><BR/><BR/>
 
-<details>
-	<summary>IA & WireFrame 확인하기</summary>
+
+
 	
 	[깃마인드](https://gitmind.com/app/docs/fjm0xdsb)
  <br/>
@@ -167,7 +167,7 @@
  
   <br/>
  
-</details>
+
 
 
 
