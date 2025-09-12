@@ -1,6 +1,5 @@
 package com.sirius.DevMate.config.security.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sirius.DevMate.config.security.jwt.service.JwtTokenService;
 import com.sirius.DevMate.domain.common.sys.OAuth2Provider;
 import com.sirius.DevMate.domain.user.User;
@@ -16,7 +15,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Map;
