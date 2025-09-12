@@ -190,7 +190,7 @@
 <details>
 	<summary>요청 예시</summary>
 
-	```
+	
 		REQUEST BODY
 		
 		POST /login/basic
@@ -359,17 +359,20 @@
 		    "content": "내 인생 가장 열심히 한 프로젝트, 아쉬움이 많지만 앞으로 더 잘할거니께"
 		}
 
- 	```
 
-		
 	
 </details>
 
+
+
 <details>
 	<summary>응답 예시</summary>
-		```
-			GET /login/basic
 
+  		RESPONSE BODY
+
+ 
+			GET /login/basic
+   
 			GET /main/my-page
 			
 			{
@@ -729,7 +732,6 @@
 			        }
 			) 
 
- 		```
 </details>
 
 <BR/><BR/>
