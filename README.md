@@ -180,7 +180,180 @@
 ---
 
 <BR/><BR/>
-### API
+### 🧒 API
+[API명세서 링크](https://www.notion.so/API-256c1d551b838048ac6cd561b7c18b1e) <br>
+
+<details>
+	<summary>요청/응답 예시</summary>
+	```
+		POST /login/basic
+
+{
+    "nickname": "bruceLee",
+    "regions": "SEOUL",
+    "skillLevel": "BEGINNER"
+}
+
+
+
+POST /login/detail
+
+{
+    "preferredAtmosphere": "RELAXED",
+    "collaborateStyle": "HYBRID",
+    "position": "BACKEND"
+}
+
+
+POST /login/stack
+
+[
+    {
+        "stackName": "Java",
+        "stackType": "LANGUAGE"
+    },
+     {
+        "stackName": "Java",
+        "stackType": "FRAMEWORK"
+    },
+     {
+        "stackName": "Java",
+        "stackType": "DEPLOY"
+    },
+     {
+        "stackName": "Java",
+        "stackType": "DATABASE"
+    }
+]
+
+
+PATCH /main/my-page
+
+{
+    "nickname": "SUI",
+    "intro": "인생힘들다",
+    "regions": "SEOUL",
+    "skillLevel": "BEGINNER",
+    "collaborateStyle": "HYBRID",
+    "position": "BACKEND",
+    "stackSetUpDtos": [
+        {
+            "stackName": "Python",
+            "stackType": "LANGUAGE"
+        },
+        {
+            "stackName": "Spring",
+            "stackType": "FRAMEWORK"
+        },
+        {
+		        "stackName": "Spring",
+            "stackType": "FRAMEWORK"
+        },
+        {
+		        "stackName": "Spring",
+            "stackType": "FRAMEWORK"
+        }
+    ]
+}
+
+POST /main/new-project
+
+{
+    "title": "devmate", > 프로젝트 이름
+    "shortDescription": "마음 맞는 개발자끼리 어쩌고", > 짧은 소개글
+    "startDate": "2025-09-09", > 프로젝트 시작일
+    "endDate": "2025-10-01", > 프로젝트 종료일
+    "collaborateStyle": "HYBRID", > 개발 유형 (혼합, 온, 오프라인)
+    "preferredRegion": "SEOUL", > 선호 지역
+    "projectLevel": "BEGINNER", > 개발 실력
+    "backendMembers": 3, > 백엔드 총원
+    "currentBackend": 1, > 현재원
+    "frontendMembers": 2,
+    "currentFrontend": 2,
+    "designMembers": 1,
+    "currentDesign": 1,
+    "pmMembers": 1,
+    "currentPm": 1
+}
+
+POST /main/projects
+
+{
+    "page": 0,
+    "regions": "SEOUL",
+    "preferredAtmosphere": "RELAXED",
+    "skillLevel": null,
+    "projectStatus": "RECRUITING"
+}
+
+POST /main/apply/1?position=BACKEND&content=잘할수있어요뽑아주세요
+
+
+POST /my-project/participation/1/docs
+
+
+{
+    "name": "로그인하기",
+    "method": "GET",
+    "path": "/main/login",
+    "responseExample": "{ content: [], totalCount: 0}",
+    "parameter": "{ content: [], totalCount: 0}"
+}
+
+PATCH /my-project/participation/1/docs/1
+
+{
+    "name": null,
+    "method": "POST",
+    "path": "/main/login/",
+    "responseExample": null,
+    "parameter": null
+}
+
+
+
+POST /my-project/participation/1/todoLists
+
+{
+    "title": "니맘대로해",
+    "position": "BACKEND",
+    "content": "채팅테스트하고 원리 파악하기 그리고 배포 완료하고 문서정리 자동화까지",
+    "priority": "HIGH",
+    "startDate": "2025-09-09",
+    "endDate": "2025-09-09",
+    "done": false
+}
+
+
+
+
+PATCH /my-project/participation/1/todoLists/1
+
+{
+    "title": "곧이야",
+    "position": null,
+    "content": "채팅테스트하고 원리 파악하기 그리고 배포 완료하고 문서정리 자동화까지다잘해낼거다",
+    "priority": null,
+    "startDate": null,
+    "endDate": null,
+    "done": false
+}
+
+
+GET /my-project/completed
+
+
+
+
+POST /my-project/completed/1/review
+
+{
+    "star": 5,
+    "content": "내 인생 가장 열심히 한 프로젝트, 아쉬움이 많지만 앞으로 더 잘할거니께"
+}
+	```
+	
+</details>
 
 <BR/><BR/>
 
