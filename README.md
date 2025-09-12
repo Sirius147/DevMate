@@ -188,7 +188,7 @@
 [API명세서 링크](https://www.notion.so/API-256c1d551b838048ac6cd561b7c18b1e) <br>
 
 <details>
-	<summary>요청/응답 예시</summary>
+	<summary>요청 예시</summary>
 
 	```
 		REQUEST BODY
@@ -363,6 +363,373 @@
 
 		
 	
+</details>
+
+<details>
+	<summary>응답 예시</summary>
+		```
+			GET /login/basic
+
+			GET /main/my-page
+			
+			{
+			    "name": "이성일",
+			    "email": "lsimma7@gmail.com",
+			    "nickname": "bruceLee",
+			    "intro": null,
+			    "region": "SEOUL",
+			    "skillLevel": "BEGINNER",
+			    "popularity": null,
+			    "preferredAtmosphere": "RELAXED",
+			    "collaborateStyle": "HYBRID",
+			    "position": "BACKEND",
+			    "stackResponseDtos": [
+			        {
+			            "stackType": "LANGUAGE",
+			            "stackName": "Java"
+			        }
+			    ]
+			}
+			
+			
+			POST /main/my-page?nickname=
+			{
+			    "available": true
+			}
+			
+			
+			GET /main?page=0
+			
+			{
+			    "pageList": {
+			        "content": [
+			            {
+			                "projectId": 1,
+			                "title": "devmate",
+			                "shortDescription": "마음 맞는 개발자끼리 어쩌고",
+			                "recruitSize": 7,
+			                "currentSize": 5,
+			                "startDate": "2025-09-09",
+			                "endDate": "2025-10-01",
+			                "collaborateStyle": "HYBRID",
+			                "preferredRegion": "SEOUL",
+			                "projectLevel": "BEGINNER",
+			                "projectStatus": "RECRUITING",
+			                "backendMembers": 3,
+			                "currentBackend": 1,
+			                "frontendMembers": 2,
+			                "currentFrontend": 2,
+			                "designMembers": 1,
+			                "currentDesign": 1,
+			                "pmMembers": 1,
+			                "currentPm": 1
+			            }
+			        ],
+			        "totalCount": 1
+			    },
+			    "needNotify": false
+			}
+			
+			POST /main/projects
+			
+			{
+			    "content": [
+			        {
+			            "projectId": 102,
+			            "title": "testProject",
+			            "shortDescription": "진짜 힘들어",
+			            "recruitSize": 7,
+			            "currentSize": 5,
+			            "startDate": "2025-09-09",
+			            "endDate": "2025-10-01",
+			            "collaborateStyle": "HYBRID",
+			            "preferredRegion": "SEOUL",
+			            "projectLevel": "BEGINNER",
+			            "projectStatus": "RECRUITING",
+			            "backendMembers": 3,
+			            "currentBackend": 1,
+			            "frontendMembers": 2,
+			            "currentFrontend": 2,
+			            "designMembers": 1,
+			            "currentDesign": 1,
+			            "pmMembers": 1,
+			            "currentPm": 1
+			        },
+			        {
+			            "projectId": 1,
+			            "title": "devmate",
+			            "shortDescription": "마음 맞는 개발자끼리 어쩌고",
+			            "recruitSize": 7,
+			            "currentSize": 5,
+			            "startDate": "2025-09-09",
+			            "endDate": "2025-10-01",
+			            "collaborateStyle": "HYBRID",
+			            "preferredRegion": "SEOUL",
+			            "projectLevel": "BEGINNER",
+			            "projectStatus": "RECRUITING",
+			            "backendMembers": 3,
+			            "currentBackend": 1,
+			            "frontendMembers": 2,
+			            "currentFrontend": 2,
+			            "designMembers": 1,
+			            "currentDesign": 1,
+			            "pmMembers": 1,
+			            "currentPm": 1
+			        }
+			    ],
+			    "totalCount": 2
+			}
+			
+			GET /main/notifications
+			
+			{
+			    "content": [
+			        {
+			            "notificationType": "APPLICATION_SUBMITTED",
+			            "content": "프로젝트devmate에 지원 완료!",
+			            "createdAt": "2025-09-08T18:49:07.684343Z"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			GET /main/notifications
+			
+			{
+			    "content": [
+			        {
+			            "notificationType": "APPLICATION_SUBMITTED",
+			            "content": "프로젝트devmate에 지원자: siriusGITHUB-a44d3e24가 포지션: BACKEND으로 지원하였습니다!",
+			            "createdAt": "2025-09-08T18:49:07.688343Z"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			
+			GET /main/notifications
+			
+			{
+			    "content": [
+			        {
+			            "notificationType": "APPLICATION_ACCEPTED",
+			            "content": "프로젝트devmate 에 참가 승인 되었습니다",
+			            "createdAt": "2025-09-08T19:09:24.461847Z"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			GET /my-project/recruiting
+			
+			{
+			    "content": [
+			        {
+			            "ProjectId": 102,
+			            "title": "testProject",
+			            "recruitSize": 7,
+			            "currentSize": 5,
+			            "backendMembers": 3,
+			            "currentBackend": 1,
+			            "frontendMembers": 2,
+			            "currentFrontend": 2,
+			            "designMembers": 1,
+			            "currentDesign": 1,
+			            "pmMembers": 1,
+			            "currentPm": 1,
+			            "projectStatus": "RECRUITING"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			GET /my-project/recruiting/1/applications
+			
+			{
+			    "content": [
+			        {
+					        "applicationId": 1,
+			            "nickname": "siriusGITHUB-a44d3e24",
+			            "applyPosition": "BACKEND",
+			            "content": "잘할수있어요뽑아주세요",
+			            "applicationStatus": "STANDBY"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			PATCH /my-project/recruiting/1/applications/1?accept=true
+			
+			200 OK
+			
+			GET /my-project/applied-project
+			
+			{
+			    "content": [
+			        {
+			            "id": 1,
+			            "title": "devmate",
+			            "applicationStatus": "APPROVAL",
+			            "content": "잘할수있어요뽑아주세요"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			
+			
+			GET /my-project/recruiting/1/start-project
+			
+			200 OK
+			
+			
+			
+			
+			GET /my-project/participation
+			
+			{
+			    "content": [
+			        {
+			            "projectId": 1,
+			            "title": "devmate",
+			            "shortDescription": "마음 맞는 개발자끼리 어쩌고",
+			            "projectStatus": "IN_PROGRESS"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			
+			GET /my-project/participation/1/docs
+			
+			[
+					{
+			
+			        docId: 1
+			        projectTitle: "유영이"
+			        name : "멋있어"
+			        method: "GET"
+			        path: "/my-project/participation"
+			        responseExample: "SDKFJSLDFK"
+			        parameter: "ASD;FKAJKFDK"
+			
+					}
+			]
+			
+			POST /my-project/participation/1/docs
+			
+			200 OK
+			
+			
+			PATCH /my-project/participation/1/docs/1
+			
+			204 NO_CONTENT
+			
+			
+			DELETE /my-project/participation/1/docs/2
+			
+			204 NO_CONTENT
+			
+			
+			GET /my-project/participation/{projectId}/todoLists 
+			[
+					{
+							toDoListId: 1
+			        projectTitle: "EC2"
+			        title: "투두리스트아이디"
+			        position: "BACKEND"
+			        content: "내일까지 ㅇㅇ할것"
+			        priority: "HIGH"
+			        startDate: "2025-09-10"
+			        endDate: "2025-09-11"
+			        isDone: false
+			        updatedAt: "2025-09-10-12:00:00"
+			
+					},
+							{
+							toDoListId: 1
+			        projectTitle: "EC2"
+			        title: "투두리스트아이디"
+			        position: "BACKEND"
+			        content: "내일까지 ㅇㅇ할것"
+			        priority: "HIGH"
+			        startDate: "2025-09-10"
+			        endDate: "2025-09-11"
+			        isDone: false
+			        updatedAt: "2025-09-10-12:00:00"
+			
+					}
+			
+			
+			]
+			POST /my-project/participation/1/todoLists
+			
+			200 OK
+			
+			
+			PATCH /my-project/participation/1/todoLists/1
+			
+			204 NO_CONTENT
+			
+			
+			GET /my-project/participation/1/complete
+			
+			200 OK
+			
+			
+			GET  /my-project/completed
+			
+			{
+			    "content": [
+			        {
+			            "projectId": 1,
+			            "title": "devmate",
+			            "shortDescription": "마음 맞는 개발자끼리 어쩌고",
+			            "projectStatus": "COMPLETED"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			
+			POST /my-project/completed/1/review
+			
+			200 OK
+			
+			
+			GET /my-project/completed/1/review
+			
+			{
+			    "content": [
+			        {
+			            "projectStar": 5,
+			            "content": "내 인생 가장 열심히 한 프로젝트, 아쉬움이 많지만 앞으로 더 잘할거니께"
+			        }
+			    ],
+			    "totalCount": 1
+			}
+			
+			
+			GET /api/chat/channels/{channelId}/messages
+			
+			
+			(
+			        id,
+			        channelId,
+			        senderUserId,
+			        messageType, // "TEXT"/"FILE"/"IMAGE"/"SYSTEM" 등
+			        content,
+			        createdAt,
+			        attachments : {
+					        id,
+			            url,
+			            filename,
+			            contentType,
+			            storageSize
+			        }
+			) 
+
+ 		```
 </details>
 
 <BR/><BR/>
