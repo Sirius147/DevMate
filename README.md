@@ -58,7 +58,7 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 
-<img src="https://img.shields.io/badge/springsecurity-#6DB33F?style=for-the-badge&logo=springsecurity&logoColor=#6DB33F">
+<img src="https://img.shields.io/badge/springsecurity-#6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
 
 
 ---
