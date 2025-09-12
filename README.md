@@ -3,7 +3,10 @@
 |<img src="https://avatars.githubusercontent.com/iamyeongg" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="100" height="100"/>|<BR/>
 |[@iamyeongg](https://github.com/iamyeongg)|  [@Sirius147](https://github.com/Sirius147)|
 
-**💪 프로젝트 플랫**
+
+<BR/><BR/><BR/>
+<BR/><BR/><BR/>
+**💪 프로젝트 개요**
 
 - **실력을 높이고** 싶고,  **비전이 같은 파트너**를 만나고 싶거나, **추구하는 개발 환경이 비슷한 동료**를 구하는 **개발자/ 예비 개발자/ 취준생 들이 프로젝트를 인원을 모집하거나 지원하며 진행하는 프로젝트를 효율적 관리를 도우는**  플랫폼
 
