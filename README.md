@@ -1,7 +1,7 @@
 #  DevMate
-|<img src="https://avatars.githubusercontent.com/iamyeongg" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="150" height="150"/>|
+|<img src="https://avatars.githubusercontent.com/iamyeongg" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="100" height="100"/>|
 
-|:-:|:-:|
+|:-:|:-:|</BR>
 
 |정유영<br/>[@iamyeongg](https://github.com/iamyeongg)|이성일<br/>[@Sirius147](https://github.com/Sirius147)|
 
