@@ -1,4 +1,4 @@
-<img width="505" height="199" alt="image" src="https://github.com/user-attachments/assets/fb08d368-f143-4048-9274-38e89d8e4c63" />#  DevMate
+#  DevMate
 <BR/><BR/><BR/>
 
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/3ae93a90-7015-403d-ac21-46397fd92902" />
@@ -177,17 +177,57 @@ https://gitmind.com/app/docs/fjm0xdsb
 <details>
   <summary>**테이블 명세서**</summary>
     application <br/>
-
-Field	Type	Null	Key	Default	Extra
-application_id	bigint	NO	PRI	NULL	
-created_at	datetime(6)	NO		NULL	
-project_id	bigint	NO	MUL	NULL	
-updated_at	datetime(6)	NO		NULL	
-user_id	bigint	NO	MUL	NULL	
-application_status	enum('APPROVAL','REJECT','STANDBY')	NO		NULL	
-apply_position	enum('BACKEND','DESIGN','FRONTEND','PM')	NO		NULL	
-content	longtext	YES		NULL	
 <img width="505" height="199" alt="image" src="https://github.com/user-attachments/assets/e91f2fbe-9cfe-4bd6-96ab-ba669f1bec64" /> </br>
+chat_attachment <br/>
+
+<img width="433" height="177" alt="image" src="https://github.com/user-attachments/assets/d9e8282c-b6e3-49e1-bf7a-dfce2eca108f" /> </br>
+
+chat_channel <br/>
+<img width="433" height="155" alt="image" src="https://github.com/user-attachments/assets/be9564a7-7627-4c71-8d72-52ab9685a372" /> <br/>
+
+chat_membership <br/>
+<img width="433" height="111" alt="image" src="https://github.com/user-attachments/assets/7d76b235-b799-45a0-9608-a090d5cc3398" /> <br/>
+
+chat_message <br/>
+
+<img width="433" height="177" alt="image" src="https://github.com/user-attachments/assets/d1e7ae96-3b65-4fc5-a406-dc03700a1d67" /> <br/>
+
+doc <br/>
+
+<img width="433" height="221" alt="image" src="https://github.com/user-attachments/assets/3b6fce87-e271-4a24-970b-af37349a2386" /> <br/>
+
+notification </br>
+	
+<img width="433" height="199" alt="image" src="https://github.com/user-attachments/assets/e70c23c0-606c-4d75-9d55-e5aa9f802d37" /> <br/>
+
+membership </br>
+<img width="433" height="177" alt="image" src="https://github.com/user-attachments/assets/c0f3e93e-8317-4b7e-a071-bf5b0cd999ca" /> <br/>
+
+
+review </br>
+<img width="433" height="133" alt="image" src="https://github.com/user-attachments/assets/c9ea3540-bfd5-4a3c-8d74-ac25f9eefcbf" /> <br/>
+
+stack </br>
+
+<img width="433" height="111" alt="image" src="https://github.com/user-attachments/assets/34cdfdb6-3fa6-47c7-ba89-168af35c7e9b" /> <br/>
+
+todolist </br>
+
+<img width="433" height="265" alt="image" src="https://github.com/user-attachments/assets/6dc7896c-fcac-4d57-b388-214526b0680b" /> <br/>
+
+project </br>
+<img width="433" height="485" alt="image" src="https://github.com/user-attachments/assets/3e4a7c76-f742-4d92-89ce-22ae74a5ee41" /> </br>
+
+users </br>
+<img width="433" height="397" alt="image" src="https://github.com/user-attachments/assets/d3ccd588-6bd1-4fce-baea-2529f7667f64" /> <br/>
+
+
+
+
+
+
+
+
 
 </details>
 
