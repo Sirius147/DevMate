@@ -1,4 +1,4 @@
-#  DevMate
+<img width="505" height="199" alt="image" src="https://github.com/user-attachments/assets/fb08d368-f143-4048-9274-38e89d8e4c63" />#  DevMate
 <BR/><BR/><BR/>
 
 <img width="512" height="512" alt="image" src="https://github.com/user-attachments/assets/3ae93a90-7015-403d-ac21-46397fd92902" />
@@ -153,11 +153,15 @@
 
 <BR/><BR/><BR/>
 <BR/>
+
 https://gitmind.com/app/docs/fjm0xdsb
 
 <img width="794" height="880" alt="제목없음" src="https://github.com/user-attachments/assets/c76a6105-f303-4ab5-a5a1-3b7ceb92ed44" />
 
-ㅡㅡㅡㅡ
+
+<BR/><BR/>
+
+---
 ### API
 
 
@@ -166,6 +170,9 @@ https://gitmind.com/app/docs/fjm0xdsb
 <BR/><BR/><BR/>
 <BR/>
 ### 👀 ERD (Entity Relation Diagram) / 테이블 명세서
+
+<BR/><BR/><BR/>
+
 
 <details>
   <summary>**테이블 명세서**</summary>
