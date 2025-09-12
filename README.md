@@ -5,7 +5,7 @@
 <BR/><BR/>
 
 |<img src="https://avatars.githubusercontent.com/iamyeongg" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/Sirius147" width="100" height="100"/>|<BR/>
-|[@iamyeongg](https://github.com/iamyeongg)|  [@Sirius147](https://github.com/Sirius147)|
+|[@iamyeongg](https://github.com/iamyeongg)    |[@Sirius147](https://github.com/Sirius147)|
 
 <BR/><BR/><BR/>
 <BR/>
