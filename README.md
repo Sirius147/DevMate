@@ -221,19 +221,19 @@ project </br>
 users </br>
 <img width="433" height="397" alt="image" src="https://github.com/user-attachments/assets/d3ccd588-6bd1-4fce-baea-2529f7667f64" /> <br/>
 
-
-
-
-
-
-
-
-
 </details>
 
-<BR/><BR/><BR/>
 <BR/>
+
+<details>
+	<summary>ERD</summary>
+	
 <img width="1342" height="834" alt="image" src="https://github.com/user-attachments/assets/bbd31ed5-0536-48cf-a447-5708cd027550" />
+ 	
+</details>
+
+<BR/><BR/>
+
 
 
 ### OAuth
