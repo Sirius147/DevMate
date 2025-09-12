@@ -87,7 +87,6 @@ public class AuthController {
         /* refresh가 살아 있을 경우 access token 재발급과 함께 main으로 redirect */
         if (refreshTokenRepository.findByJti(jwt.getId()).isPresent()) {
             return ResponseEntity.status(302)
-                    .header("Location","/main")
                     .body(Map.of("token_type","bearer",
                             "access_token",jwtTokenService.getAccessByRefresh(jwt.getSubject())));
         }
