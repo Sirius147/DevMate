@@ -165,7 +165,24 @@ https://gitmind.com/app/docs/fjm0xdsb
 
 <BR/><BR/><BR/>
 <BR/>
-### 👀 ERD (Entity Relation Diagram)
+### 👀 ERD (Entity Relation Diagram) / 테이블 명세서
+
+<details>
+  <summary>**테이블 명세서**</summary>
+    application <br/>
+
+Field	Type	Null	Key	Default	Extra
+application_id	bigint	NO	PRI	NULL	
+created_at	datetime(6)	NO		NULL	
+project_id	bigint	NO	MUL	NULL	
+updated_at	datetime(6)	NO		NULL	
+user_id	bigint	NO	MUL	NULL	
+application_status	enum('APPROVAL','REJECT','STANDBY')	NO		NULL	
+apply_position	enum('BACKEND','DESIGN','FRONTEND','PM')	NO		NULL	
+content	longtext	YES		NULL	
+<img width="505" height="199" alt="image" src="https://github.com/user-attachments/assets/e91f2fbe-9cfe-4bd6-96ab-ba669f1bec64" /> </br>
+
+</details>
 
 <BR/><BR/><BR/>
 <BR/>
