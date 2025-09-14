@@ -77,7 +77,7 @@ jwt:
 
 app:
   frontend:
-    success-redirect: "https://localhost:3000"  # 프론트의 성공 리다이렉트 주소 "http://ec2-13-209-7-75.ap-northeast-2.compute.amazonaws.com:18080/login/basic"
+    success-redirect: "http://localhost:3000"  # 프론트의 성공 리다이렉트 주소 "http://ec2-13-209-7-75.ap-northeast-2.compute.amazonaws.com:18080/login/basic"
 #
 #    성공 핸들러가 JWT(access) 발급
 #
