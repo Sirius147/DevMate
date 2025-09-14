@@ -80,17 +80,17 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         // 보안상 권장: refreshToken은 HttpOnly+Secure 쿠키로
         Cookie refreshTokenCookie = new Cookie("refresh_token", tokenPair.refresh());
-        refreshTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(true);
-        refreshTokenCookie.setAttribute("same_site", "None");
+        refreshTokenCookie.setAttribute("SameSite", "None");
         refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
         refreshTokenCookie.setMaxAge(60*60*24*14);
         response.addCookie(refreshTokenCookie);
 
         Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
-        acessTokenCookie.setHttpOnly(false);
+        acessTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(true);
-        refreshTokenCookie.setAttribute("same_site", "None");
+        refreshTokenCookie.setAttribute("SameSite", "None");
         acessTokenCookie.setPath("/");
         acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
         response.addCookie(acessTokenCookie);
