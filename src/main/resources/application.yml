@@ -73,7 +73,7 @@ jwt:
 
 app:
   frontend:
-    success-redirect: "http://localhost:3000/auth/first"  # 프론트의 성공 리다이렉트 주소
+    success-redirect: "/auth/success"  # 프론트의 성공 리다이렉트 주소
 #
 #    성공 핸들러가 JWT(access) 발급
 #
