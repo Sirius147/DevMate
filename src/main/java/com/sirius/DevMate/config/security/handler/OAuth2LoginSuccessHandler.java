@@ -63,8 +63,8 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         Optional<User> opt = userRepository.findByProviderAndProviderId(provider, providerId);
         // 정말 드물지만, upsert 전에 핸들러가 먼저 불리면 방어적으로 에러
         if (opt.isEmpty()) {
-            log.error("upsert 전에 successHandler가 먼저 호출!");
-            getRedirectStrategy().sendRedirect(request, response, "/logout?error=callSuccessHandlerBeforeUpsert");
+            log.error("success logic before upsert, redirect to /auth/logout");
+            getRedirectStrategy().sendRedirect(request, response, "auth/logout");
             return;
         }
         // User 불러오기
@@ -80,13 +80,17 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         // 보안상 권장: refreshToken은 HttpOnly+Secure 쿠키로
         Cookie refreshTokenCookie = new Cookie("refresh_token", tokenPair.refresh());
-        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setAttribute("same_site", "None");
         refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
         refreshTokenCookie.setMaxAge(60*60*24*14);
         response.addCookie(refreshTokenCookie);
 
         Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
-        acessTokenCookie.setHttpOnly(true);
+        acessTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setAttribute("same_site", "None");
         acessTokenCookie.setPath("/");
         acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
         response.addCookie(acessTokenCookie);

@@ -8,14 +8,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private static final String FRONT_ADDRESS = "http://localhost";
+    private static final String FRONT_ADDRESS = "http://localhost:3000";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(FRONT_ADDRESS)
-                .exposedHeaders("location")
+                .allowedOrigins(FRONT_ADDRESS, "https:/localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
+                .exposedHeaders("location")
                 .allowCredentials(true);
     }
 }
