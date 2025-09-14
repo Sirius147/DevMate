@@ -98,8 +98,8 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         //        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
 
         String target = user.getCreatedAt().equals(user.getUpdatedAt()) ? "/auth/first" : "/auth/success";
-        response.sendRedirect(target);
-
+//        response.sendRedirect(target);
+        getRedirectStrategy().sendRedirect(request, response, target);
 //        refresh.setSecure(true);    // https 에서만 전송
 //        refresh.setAttribute("SameSite", "Strict"); 다른 도메인에서 접근 가능
 
