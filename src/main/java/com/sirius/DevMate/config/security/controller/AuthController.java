@@ -41,16 +41,30 @@ public class AuthController {
     private final JwtDecoder jwtDecoder;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @GetMapping("/success")
-    public ResponseEntity<Map<String, Object>> success(
+    @GetMapping("/first")
+    public ResponseEntity<Map<String, Object>> first(
             @CookieValue(name = "access_token") String access,
-            @CookieValue(name = "refresh_token") String refresh,
-            @CookieValue(name = "login_type") String type
+            @CookieValue(name = "refresh_token") String refresh
+//            ,@CookieValue(name = "login_type") String type
     ) {
         Map<String, Object> tokens = new HashMap<>();
         tokens.put("access_token", access);
         tokens.put("refresh_token", refresh);
-        tokens.put("login_type", type);
+        tokens.put("login_type", "최초 유저");
+        return ResponseEntity.ok(tokens);
+    }
+
+
+    @GetMapping("/success")
+    public ResponseEntity<Map<String, Object>> success(
+            @CookieValue(name = "access_token") String access,
+            @CookieValue(name = "refresh_token") String refresh
+//            ,@CookieValue(name = "login_type") String type
+    ) {
+        Map<String, Object> tokens = new HashMap<>();
+        tokens.put("access_token", access);
+        tokens.put("refresh_token", refresh);
+        tokens.put("login_type", "기존 유저");
         return ResponseEntity.ok(tokens);
     }
 

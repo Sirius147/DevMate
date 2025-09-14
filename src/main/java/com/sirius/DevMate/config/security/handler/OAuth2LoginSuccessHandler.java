@@ -95,16 +95,17 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
         response.addCookie(acessTokenCookie);
 
-        String type = user.getCreatedAt().equals(user.getUpdatedAt()) ? "first" : "member";
-
-        Cookie loginTypeCookie = new Cookie("login_type", type);
-        loginTypeCookie.setHttpOnly(true);
-        loginTypeCookie.setSecure(true);
-        loginTypeCookie.setAttribute("SameSite", "None");
-        loginTypeCookie.setPath("/");
-        response.addCookie(loginTypeCookie);
-
-        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
+//        String type = user.getCreatedAt().equals(user.getUpdatedAt()) ? "first" : "member";
+//
+//        Cookie loginTypeCookie = new Cookie("login_type", type);
+//        loginTypeCookie.setHttpOnly(true);
+//        loginTypeCookie.setSecure(true);
+//        loginTypeCookie.setAttribute("SameSite", "None");
+//        loginTypeCookie.setPath("/");
+//        response.addCookie(loginTypeCookie);
+//        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
+        String target = user.getCreatedAt().equals(user.getUpdatedAt()) ? "/auth/first" : "/auth/success";
+        getRedirectStrategy().sendRedirect(request, response, target);
 
 //        refresh.setSecure(true);    // https 에서만 전송
 //        refresh.setAttribute("SameSite", "Strict"); 다른 도메인에서 접근 가능
