@@ -14,13 +14,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -42,6 +40,31 @@ public class AuthController {
     private final JwtTokenService jwtTokenService;
     private final JwtDecoder jwtDecoder;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    @GetMapping("/first")
+    public ResponseEntity<Map<String, Object>> first(
+            @CookieValue(name = "access_token") String access,
+            @CookieValue(name = "refresh_token") String refresh
+    ) {
+        Map<String, Object> tokens = new HashMap<>();
+        tokens.put("access_token", access);
+        tokens.put("refresh_token", refresh);
+        tokens.put("login_type", "first");
+        return ResponseEntity.ok(tokens);
+    }
+
+    @GetMapping("/success")
+    public ResponseEntity<Map<String, Object>> success(
+            @CookieValue(name = "access_token") String access,
+            @CookieValue(name = "refresh_token") String refresh
+    ) {
+        Map<String, Object> tokens = new HashMap<>();
+        tokens.put("access_token", access);
+        tokens.put("refresh_token", refresh);
+        tokens.put("login_type", "member");
+        return ResponseEntity.ok(tokens);
+    }
+
 
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(HttpServletRequest request

@@ -95,7 +95,10 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
         response.addCookie(acessTokenCookie);
 
+        //        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
 
+        String target = user.getCreatedAt().equals(user.getUpdatedAt()) ? "/auth/first" : "/auth/success";
+        response.sendRedirect(target);
 
 //        refresh.setSecure(true);    // https 에서만 전송
 //        refresh.setAttribute("SameSite", "Strict"); 다른 도메인에서 접근 가능
@@ -115,7 +118,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 //        );
 //        new ObjectMapper().writeValue(response.getWriter(), accessTokenJson);
 
-        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
+
 
 //        // 최초 로그인 or 기존 로그인 ver Session
 
