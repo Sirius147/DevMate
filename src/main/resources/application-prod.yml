@@ -35,12 +35,12 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID:}
             client-secret: ${GOOGLE_CLIENT_SECRET:}
             scope: openid, email, profile
-            redirect-url: http://devmateu0c.p-e.kr/login/oauth2/code/google # http://ec2-13-209-7-75.ap-northeast-2.compute.amazonaws.com:18080/login/oauth2/code/google
+            redirect-url: https://devmateu0c.p-e.kr/login/oauth2/code/google # http://ec2-13-209-7-75.ap-northeast-2.compute.amazonaws.com:18080/login/oauth2/code/google
           github:
             client-id: ${GITHUB_CLIENT_ID:}
             client-secret: ${GITHUB_CLIENT_SECRET:}
             scope: user:email
-            redirect-url: http://devmateu0c.p-e.kr/login/oauth2/code/github # http://ec2-13-209-7-75.ap-northeast-2.compute.amazonaws.com:18080/login/oauth2/code/github
+            redirect-url: https://devmateu0c.p-e.kr/login/oauth2/code/github # http://ec2-13-209-7-75.ap-northeast-2.compute.amazonaws.com:18080/login/oauth2/code/github
 
   jackson:
     time-zone: UTC
