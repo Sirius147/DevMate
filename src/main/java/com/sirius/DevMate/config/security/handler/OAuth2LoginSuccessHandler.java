@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Map;
@@ -78,22 +79,31 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         JwtTokenService.TokenPair tokenPair = jwtTokenService.issue(user.getUserId(), user.getRole());
 
-        // 보안상 권장: refreshToken은 HttpOnly+Secure 쿠키로
-        Cookie refreshTokenCookie = new Cookie("refresh_token", tokenPair.refresh());
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(true);
-        refreshTokenCookie.setAttribute("SameSite", "None");
-        refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
-        refreshTokenCookie.setMaxAge(60*60*24*14);
-        response.addCookie(refreshTokenCookie);
 
-        Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
-        acessTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(true);
-        refreshTokenCookie.setAttribute("SameSite", "None");
-        acessTokenCookie.setPath("/");
-        acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
-        response.addCookie(acessTokenCookie);
+        String url = UriComponentsBuilder.fromUriString("localhost:3000")
+                .queryParam("access_token", tokenPair.access())
+                .queryParam("refresh_token", tokenPair.refresh())
+                .build().toString();
+
+        getRedirectStrategy().sendRedirect(request, response, url);
+
+
+        // 보안상 권장: refreshToken은 HttpOnly+Secure 쿠키로
+//        Cookie refreshTokenCookie = new Cookie("refresh_token", tokenPair.refresh());
+//        refreshTokenCookie.setHttpOnly(true);
+//        refreshTokenCookie.setSecure(true);
+//        refreshTokenCookie.setAttribute("SameSite", "None");
+//        refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
+//        refreshTokenCookie.setMaxAge(60*60*24*14);
+//        response.addCookie(refreshTokenCookie);
+//
+//        Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
+//        acessTokenCookie.setHttpOnly(true);
+//        refreshTokenCookie.setSecure(true);
+//        refreshTokenCookie.setAttribute("SameSite", "None");
+//        acessTokenCookie.setPath("/");
+//        acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
+//        response.addCookie(acessTokenCookie);
 
 //        String type = user.getCreatedAt().equals(user.getUpdatedAt()) ? "first" : "member";
 //
@@ -104,8 +114,11 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 //        loginTypeCookie.setPath("/");
 //        response.addCookie(loginTypeCookie);
 //        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
-        String target = user.getCreatedAt().equals(user.getUpdatedAt()) ? "/auth/first" : "/auth/success";
-        getRedirectStrategy().sendRedirect(request, response, target);
+        /*
+            아래 두줄이랑 쿠키 세팅 주석 풀기
+         */
+//        String target = user.getCreatedAt().equals(user.getUpdatedAt()) ? "/auth/first" : "/auth/success";
+//        getRedirectStrategy().sendRedirect(request, response, target);
 
 //        refresh.setSecure(true);    // https 에서만 전송
 //        refresh.setAttribute("SameSite", "Strict"); 다른 도메인에서 접근 가능
