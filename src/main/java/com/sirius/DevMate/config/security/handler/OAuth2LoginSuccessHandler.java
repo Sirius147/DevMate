@@ -80,30 +80,32 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         JwtTokenService.TokenPair tokenPair = jwtTokenService.issue(user.getUserId(), user.getRole());
 
 
-        String url = UriComponentsBuilder.fromUriString("localhost:3000")
-                .queryParam("access_token", tokenPair.access())
-                .queryParam("refresh_token", tokenPair.refresh())
-                .build().toString();
-
-        getRedirectStrategy().sendRedirect(request, response, url);
+//        String url = UriComponentsBuilder.fromHttpUrl("localhost:3000")
+//                .queryParam("access_token", tokenPair.access())
+//                .queryParam("refresh_token", tokenPair.refresh())
+//                .build().toString();
+//
+//        getRedirectStrategy().sendRedirect(request, response, url);
 
 
         // 보안상 권장: refreshToken은 HttpOnly+Secure 쿠키로
-//        Cookie refreshTokenCookie = new Cookie("refresh_token", tokenPair.refresh());
-//        refreshTokenCookie.setHttpOnly(true);
-//        refreshTokenCookie.setSecure(true);
-//        refreshTokenCookie.setAttribute("SameSite", "None");
-//        refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
-//        refreshTokenCookie.setMaxAge(60*60*24*14);
-//        response.addCookie(refreshTokenCookie);
-//
-//        Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
-//        acessTokenCookie.setHttpOnly(true);
-//        refreshTokenCookie.setSecure(true);
-//        refreshTokenCookie.setAttribute("SameSite", "None");
-//        acessTokenCookie.setPath("/");
-//        acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
-//        response.addCookie(acessTokenCookie);
+        Cookie refreshTokenCookie = new Cookie("refresh_token", tokenPair.refresh());
+        refreshTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setAttribute("SameSite", "None");
+        refreshTokenCookie.setPath("/");       // 모든 경로에 대하여 쿠키를 보냄
+        refreshTokenCookie.setMaxAge(60*60*24*14);
+        response.addCookie(refreshTokenCookie);
+
+        Cookie acessTokenCookie = new Cookie("access_token", tokenPair.access());
+        acessTokenCookie.setHttpOnly(false);
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setAttribute("SameSite", "None");
+        acessTokenCookie.setPath("/");
+        acessTokenCookie.setMaxAge(Math.toIntExact(accessExpSeconds));
+        response.addCookie(acessTokenCookie);
+
+        getRedirectStrategy().sendRedirect(request,response,frontendRedirect);
 
 //        String type = user.getCreatedAt().equals(user.getUpdatedAt()) ? "first" : "member";
 //
