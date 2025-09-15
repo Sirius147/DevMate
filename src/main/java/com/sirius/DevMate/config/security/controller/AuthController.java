@@ -59,12 +59,12 @@ public class AuthController {
     public ResponseEntity<Map<String, Object>> success(
             @CookieValue(name = "access_token") String access,
             @CookieValue(name = "refresh_token") String refresh
-//            ,@CookieValue(name = "login_type") String type
+            ,@CookieValue(name = "login_type") String type
     ) {
         Map<String, Object> tokens = new HashMap<>();
         tokens.put("access_token", access);
         tokens.put("refresh_token", refresh);
-        tokens.put("login_type", "기존 유저");
+        tokens.put("login_type", type);
         return ResponseEntity.ok(tokens);
     }
 
