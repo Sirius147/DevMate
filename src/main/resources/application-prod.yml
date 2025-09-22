@@ -50,7 +50,7 @@ server:
   servlet:
     session:
       timeout: 30
-
+# test commit
 # log
 logging:
   charset:
